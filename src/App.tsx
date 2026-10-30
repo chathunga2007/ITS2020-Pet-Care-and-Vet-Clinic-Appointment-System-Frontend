@@ -1,18 +1,39 @@
+import { Toaster } from 'react-hot-toast';
+import AuthProvider from './context/AuthContext';
+import Router from './router';
+
 function App() {
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center p-4">
-      <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md w-full border border-slate-200">
-        <h1 className="text-3xl font-extrabold text-indigo-600 mb-2">
-          Pet Care & Vet Clinic
-        </h1>
-        <p className="text-slate-600 mb-4">
-          Tailwind CSS setup eka 100% hariyata wada!
-        </p>
-        <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-xl transition duration-200 shadow-md">
-          Ready to Build Auth UI
-        </button>
-      </div>
-    </div>
+    <AuthProvider>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3500,
+          style: {
+            background: '#0f172a',
+            color: '#f8fafc',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            borderRadius: '1rem',
+            padding: '12px 18px',
+            fontSize: '13px',
+            fontWeight: 500,
+          },
+          success: {
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#ffffff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#f43f5e',
+              secondary: '#ffffff',
+            },
+          },
+        }}
+      />
+      <Router />
+    </AuthProvider>
   );
 }
 
