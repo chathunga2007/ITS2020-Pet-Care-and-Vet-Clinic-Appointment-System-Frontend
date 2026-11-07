@@ -1,0 +1,140 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { Star, Award, Stethoscope } from "lucide-react";
+
+interface Doctor {
+  id: string;
+  name: string;
+  specialty: string;
+  degrees: string;
+  experience: string;
+  rating: number;
+  reviews: number;
+  image: string;
+}
+
+export const VetsSection: React.FC = () => {
+  const doctors: Doctor[] = [
+    {
+      id: "doc-1",
+      name: "Dr. Samantha Perera",
+      specialty: "Chief Veterinary Surgeon & Orthopedics",
+      degrees: "BVSc (Hons), MS (Vet Surgery)",
+      experience: "14+ Years",
+      rating: 4.9,
+      reviews: 420,
+      image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+    },
+    {
+      id: "doc-2",
+      name: "Dr. Kasun Jayawardena",
+      specialty: "Emergency Medicine & Critical Care",
+      degrees: "BVSc, MRCVS Fellow",
+      experience: "11+ Years",
+      rating: 5.0,
+      reviews: 380,
+      image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400",
+    },
+    {
+      id: "doc-3",
+      name: "Dr. Nilmini Fernando",
+      specialty: "Internal Medicine & Feline Care",
+      degrees: "BVSc, Certified Feline Practitioner",
+      experience: "9+ Years",
+      rating: 4.9,
+      reviews: 310,
+      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400",
+    },
+    {
+      id: "doc-4",
+      name: "Dr. Roshan Wickramasinghe",
+      specialty: "Dermatology, Allergies & Dentistry",
+      degrees: "BVSc, Dip. Vet Dentistry",
+      experience: "8+ Years",
+      rating: 4.8,
+      reviews: 265,
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&q=80&w=400",
+    },
+  ];
+
+  return (
+    <section id="specialists" className="py-24 bg-themeDark-950 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-themeYellow-400/10 border border-themeYellow-400/25 text-themeYellow-400 text-xs font-bold uppercase tracking-wider mb-4">
+            <Stethoscope className="w-3.5 h-3.5" />
+            <span>Meet Our Specialists</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
+            Compassionate Care by Certified Doctors
+          </h2>
+          <p className="text-slate-300 text-base sm:text-lg">
+            Our multi-disciplinary team brings together decades of clinical excellence to ensure
+            your pets receive the precise medical attention they need.
+          </p>
+        </div>
+
+        {/* Doctors Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {doctors.map((doc) => (
+            <div
+              key={doc.id}
+              className="glass-card glass-card-hover rounded-3xl overflow-hidden border border-white/10 flex flex-col justify-between group"
+            >
+              <div className="relative h-64 overflow-hidden bg-themeDark-900">
+                <img
+                  src={doc.image}
+                  alt={doc.name}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-95"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-themeDark-950 via-themeDark-950/20 to-transparent" />
+                
+                {/* Rating Badge */}
+                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 flex items-center gap-1.5 shadow-lg">
+                  <Star className="w-3.5 h-3.5 text-themeYellow-400 fill-themeYellow-400" />
+                  <span className="text-xs font-bold text-white">{doc.rating}</span>
+                  <span className="text-[10px] text-slate-400">({doc.reviews})</span>
+                </div>
+              </div>
+
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-white group-hover:text-themeYellow-400 transition-colors">
+                    {doc.name}
+                  </h3>
+                  <p className="text-xs font-semibold text-themeYellow-400 mt-1">
+                    {doc.specialty}
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    {doc.degrees}
+                  </p>
+                </div>
+
+                <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <div className="flex items-center gap-1 text-[11px] text-slate-400">
+                    <Award className="w-3.5 h-3.5 text-themeYellow-400" />
+                    <span>{doc.experience} Exp</span>
+                  </div>
+
+                  <Link
+                    to="/register"
+                    className="text-xs font-bold text-themeDark-950 bg-themeYellow-400 hover:bg-themeYellow-300 px-3 py-1.5 rounded-xl transition-all shadow-md shadow-themeYellow-500/20"
+                  >
+                    Consult
+                  </Link>
+                </div>
+              </div>
+
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default VetsSection;
