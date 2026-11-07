@@ -1,40 +1,42 @@
-import { Toaster } from 'react-hot-toast';
-import AuthProvider from './context/AuthContext';
-import Router from './router';
+import React from "react";
+import AuthProvider from "./context/AuthContext";
+import AppRouter from "./router";
+import { Toaster } from "react-hot-toast";
 
-function App() {
+export const App: React.FC = () => {
   return (
     <AuthProvider>
+      <AppRouter />
       <Toaster
         position="top-right"
         toastOptions={{
-          duration: 3500,
+          duration: 4000,
           style: {
-            background: '#0f172a',
-            color: '#f8fafc',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            borderRadius: '1rem',
-            padding: '12px 18px',
-            fontSize: '13px',
-            fontWeight: 500,
+            background: "#131722",
+            color: "#f8fafc",
+            border: "1px solid rgba(245, 158, 11, 0.3)",
+            borderRadius: "1rem",
+            padding: "0.85rem 1.25rem",
+            fontSize: "0.875rem",
+            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)",
           },
           success: {
             iconTheme: {
-              primary: '#10b981',
-              secondary: '#ffffff',
+              primary: "#f59e0b",
+              secondary: "#0a0d14",
             },
           },
           error: {
             iconTheme: {
-              primary: '#f43f5e',
-              secondary: '#ffffff',
+              primary: "#ef4444",
+              secondary: "#0a0d14",
             },
           },
         }}
       />
-      <Router />
     </AuthProvider>
   );
-}
+};
 
 export default App;
+
