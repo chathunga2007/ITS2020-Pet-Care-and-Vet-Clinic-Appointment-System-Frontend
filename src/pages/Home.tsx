@@ -1,63 +1,44 @@
-import { useState } from 'react';
-import Navbar from '../components/layout/Navbar';
-import HeroSection from '../components/home/HeroSection';
-import EmergencyBanner from '../components/home/EmergencyBanner';
-import ServicesSection from '../components/home/ServicesSection';
-import WhyChooseUs from '../components/home/WhyChooseUs';
-import DoctorsSection from '../components/home/DoctorsSection';
-import TestimonialsSection from '../components/home/TestimonialsSection';
-import Footer from '../components/layout/Footer';
-import AppointmentModal from '../components/home/AppointmentModal';
+import React from "react";
+import Navbar from "../components/Navbar";
+import HeroSection from "../components/HeroSection";
+import PetBookingWorkflow from "../components/PetBookingWorkflow";
+import ServicesSection from "../components/ServicesSection";
+import WhyChooseUs from "../components/WhyChooseUs";
+import VetsSection from "../components/VetsSection";
+import CTASection from "../components/CTASection";
+import Footer from "../components/Footer";
 
-export default function Home() {
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState('General Checkup & Consultation');
-
-  const handleOpenBooking = (serviceName?: string) => {
-    if (serviceName) {
-      setSelectedService(serviceName);
-    }
-    setBookingModalOpen(true);
-  };
-
-  const handleCloseBooking = () => {
-    setBookingModalOpen(false);
-  };
-
+export const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col overflow-x-hidden">
-      {/* Top Navigation */}
-      <Navbar onOpenBooking={() => handleOpenBooking()} />
+    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col selection:bg-sky-400 selection:text-slate-950">
+      {/* Top Glass Navbar */}
+      <Navbar />
 
-      {/* Hero Section with Video Background */}
-      <main className="flex-grow">
-        <HeroSection onOpenBooking={() => handleOpenBooking()} />
+      {/* Main Home Sections */}
+      <main className="flex-1">
+        {/* Cinematic Pet Care Hero with Doctor Care Backdrop */}
+        <HeroSection />
 
-        {/* 24/7 Emergency Dispatch Banner */}
-        <EmergencyBanner />
+        {/* Core Feature: Add Pets & Schedule Appointments Workflow */}
+        <PetBookingWorkflow />
 
         {/* Clinical Services */}
-        <ServicesSection onBookService={(service) => handleOpenBooking(service)} />
+        <ServicesSection />
 
-        {/* Why Choose Our Clinic */}
+        {/* Why Choose Us */}
         <WhyChooseUs />
 
-        {/* Senior Veterinarians */}
-        <DoctorsSection onBookWithDoctor={(doctor) => handleOpenBooking(`Consultation with ${doctor}`)} />
+        {/* Certified Specialists Doctors */}
+        <VetsSection />
 
-        {/* Pet Parents Testimonials */}
-        <TestimonialsSection />
+        {/* Guest Conversion CTA Banner */}
+        <CTASection />
       </main>
 
-      {/* Interactive Quick Appointment Booking Modal */}
-      <AppointmentModal
-        isOpen={bookingModalOpen}
-        onClose={handleCloseBooking}
-        defaultService={selectedService}
-      />
-
-      {/* Global Footer */}
+      {/* Modern Clinic Footer */}
       <Footer />
     </div>
   );
-}
+};
+
+export default Home;
