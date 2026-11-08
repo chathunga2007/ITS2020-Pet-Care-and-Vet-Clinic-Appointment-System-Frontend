@@ -10,28 +10,28 @@ import Footer from "../components/Footer";
 
 export const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col selection:bg-sky-400 selection:text-slate-950">
+    <div className="min-h-screen bg-[#f3faf8] text-slate-800 dark:bg-[#07090e] dark:text-slate-100 flex flex-col selection:bg-teal-600 selection:text-white transition-colors duration-300">
       {/* Top Glass Navbar */}
       <Navbar />
 
       {/* Main Home Sections */}
       <main className="flex-1">
-        {/* Cinematic Pet Care Hero with Doctor Care Backdrop */}
+        {/* 1. Cinematic Pet Care Hero with Doctor Care Backdrop */}
         <HeroSection />
 
-        {/* Core Feature: Add Pets & Schedule Appointments Workflow */}
-        <PetBookingWorkflow />
-
-        {/* Clinical Services */}
+        {/* 2. Clinical Services & 24/7 Emergency */}
         <ServicesSection />
 
-        {/* Why Choose Us */}
+        {/* 3. Why Choose Us */}
         <WhyChooseUs />
 
-        {/* Certified Specialists Doctors */}
+        {/* 4. Certified Specialists Doctors */}
         <VetsSection />
 
-        {/* Guest Conversion CTA Banner */}
+        {/* 5. How Appointments Work for Members */}
+        <PetBookingWorkflow />
+
+        {/* 6. Guest Conversion CTA Banner */}
         <CTASection />
       </main>
 
