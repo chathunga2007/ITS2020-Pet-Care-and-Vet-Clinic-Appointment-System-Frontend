@@ -59,6 +59,7 @@ export const VetsSection: React.FC = () => {
 
   return (
     <section id="specialists" className="py-20 sm:py-24 bg-white dark:bg-[#07090e] relative transition-colors">
+      <div id="vets" className="sr-only" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

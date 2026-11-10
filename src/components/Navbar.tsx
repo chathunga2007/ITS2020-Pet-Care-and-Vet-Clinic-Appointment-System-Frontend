@@ -44,12 +44,14 @@ export const Navbar: React.FC = () => {
     navigate("/");
   };
 
-  // Nav links matching the AI design layout
+  // Nav links matching the AI design layout with all clinic pages & sections in orderly sequence
   const navLinks: NavLinkItem[] = [
     { name: "Home", href: "/#home", icon: "🏠" },
     { name: "Services", href: "/#services", icon: "🐾" },
-    { name: "About", href: "/#why-us", icon: "📅" },
-    { name: "Contact", href: "/#emergency", icon: "📞", badge: "24/7" },
+    { name: "About", href: "/#why-us", icon: "✨" },
+    { name: "Doctors", href: "/#specialists", icon: "🩺" },
+    { name: "How It Works", href: "/#workflow", icon: "📋" },
+    { name: "Contact", href: "/#contact", icon: "📞", badge: "24/7" },
   ];
 
   const handleLinkClick = (href: string) => {
@@ -61,7 +63,12 @@ export const Navbar: React.FC = () => {
       } else {
         const element = document.getElementById(targetId);
         if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+          const navOffset = 90;
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition - navOffset,
+            behavior: "smooth"
+          });
         }
       }
     } else {
@@ -90,17 +97,17 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1.5">
           {navLinks.map((item) => (
             <button
               key={item.name}
               onClick={() => handleLinkClick(item.href)}
-              className="px-3.5 py-1.5 text-sm font-bold text-[#0f3b46] dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 transition-colors rounded-full hover:bg-teal-50 dark:hover:bg-white/5 flex items-center gap-1.5 cursor-pointer"
+              className="px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-bold text-[#0f3b46] dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 transition-colors rounded-full hover:bg-teal-50 dark:hover:bg-white/5 flex items-center gap-1 lg:gap-1.5 cursor-pointer whitespace-nowrap"
             >
               <span className="text-xs">{item.icon}</span>
               <span>{item.name}</span>
               {item.badge && (
-                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20">
+                <span className="text-[9px] lg:text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20">
                   {item.badge}
                 </span>
               )}

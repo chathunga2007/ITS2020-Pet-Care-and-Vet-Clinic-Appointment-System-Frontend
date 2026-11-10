@@ -11,7 +11,7 @@ import {
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#032e30] text-slate-300 text-sm border-t border-teal-800/40 relative overflow-hidden transition-colors duration-300">
+    <footer id="contact" className="bg-[#032e30] text-slate-300 text-sm border-t border-teal-800/40 relative overflow-hidden transition-colors duration-300">
       
       {/* Decorative Paws in Background */}
       <div className="absolute top-8 left-10 text-white/5 text-8xl pointer-events-none select-none">🐾</div>
