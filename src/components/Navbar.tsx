@@ -91,7 +91,7 @@ export const Navbar: React.FC = () => {
           </div>
           <div className="flex items-center gap-1.5">
             <span className="text-xl sm:text-2xl font-black tracking-tight text-[#0f3b46] dark:text-teal-300 group-hover:text-teal-600 transition-colors">
-              PetCare <span className="text-teal-600 dark:text-teal-400">&amp; Vet</span>
+              PetCare & Vet Clinic
             </span>
           </div>
         </Link>
