@@ -2,12 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { Sparkles, Calendar, ArrowRight, CheckCircle2 } from "lucide-react";
+import SectionLiveBackground from "./SectionLiveBackground";
 
 export const CTASection: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
 
   return (
     <section className="py-20 relative overflow-hidden bg-white dark:bg-[#07090e] transition-colors">
+      {/* Live Pet Animation Background */}
+      <SectionLiveBackground variant="cta" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="relative rounded-3xl p-8 sm:p-12 lg:p-16 overflow-hidden bg-gradient-to-r from-teal-50 via-[#f0fbf9] to-teal-100/50 dark:from-[#062022] dark:via-[#08292c] dark:to-[#062022] border border-teal-200/80 dark:border-teal-800/40 shadow-xl">

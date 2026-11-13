@@ -1,4 +1,5 @@
 import React from "react";
+import SectionLiveBackground from "./SectionLiveBackground";
 import {
   ShieldCheck,
   Zap,
@@ -34,8 +35,11 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section id="why-us" className="py-20 sm:py-24 bg-[#f8fcfb] dark:bg-[#07090e] relative border-t border-b border-teal-100/70 dark:border-white/5 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="why-us" className="py-20 sm:py-24 bg-[#f8fcfb] dark:bg-[#07090e] relative border-t border-b border-teal-100/70 dark:border-white/5 transition-colors overflow-hidden">
+      {/* Live Pet Animation Background */}
+      <SectionLiveBackground variant="why-us" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           

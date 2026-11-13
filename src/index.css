@@ -94,3 +94,185 @@
     -webkit-text-fill-color: transparent;
   }
 }
+
+/* ==========================================================================
+   Hero Section Live Animation System (Pet Care & Clinic Theme)
+   ========================================================================== */
+
+@keyframes heroBlob1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(45px, -35px) scale(1.12) rotate(6deg);
+  }
+  66% {
+    transform: translate(-35px, 25px) scale(0.92) rotate(-6deg);
+  }
+}
+
+@keyframes heroBlob2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  40% {
+    transform: translate(-50px, 40px) scale(1.15) rotate(-8deg);
+  }
+  80% {
+    transform: translate(30px, -25px) scale(0.92) rotate(5deg);
+  }
+}
+
+@keyframes heroBlob3 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(0.95);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(40px, -25px) scale(1.18);
+    opacity: 0.45;
+  }
+}
+
+/* Clear, Pop-out Walking Paw Step Animation */
+@keyframes heroPawStepPop {
+  0%, 100% {
+    opacity: 0.18;
+    transform: scale(0.85) rotate(var(--step-rot, 0deg));
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  25% {
+    opacity: 0.95;
+    transform: scale(1.2) rotate(var(--step-rot, 0deg));
+    filter: drop-shadow(0 4px 14px rgba(13, 148, 136, 0.65));
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1) rotate(var(--step-rot, 0deg));
+    filter: drop-shadow(0 2px 8px rgba(13, 148, 136, 0.4));
+  }
+  80% {
+    opacity: 0.25;
+    transform: scale(0.9) rotate(var(--step-rot, 0deg));
+  }
+}
+
+/* Distinct Floating Styles */
+@keyframes heroFloatBob1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(4deg);
+  }
+}
+
+@keyframes heroFloatBob2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-22px) rotate(-5deg);
+  }
+}
+
+@keyframes heroFloatBob3 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(3deg);
+  }
+}
+
+@keyframes heroFloatSway {
+  0%, 100% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateX(12px) translateY(-10px) rotate(4deg);
+  }
+  66% {
+    transform: translateX(-10px) translateY(8px) rotate(-4deg);
+  }
+}
+
+@keyframes heroSparkleTwinkle {
+  0%, 100% {
+    transform: scale(0.7) rotate(0deg);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.3) rotate(90deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.85));
+  }
+}
+
+@keyframes heroEcgPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scaleX(0.96);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scaleX(1.04);
+    filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.8));
+  }
+}
+
+@keyframes heroPulseRings {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-hero-blob-1 {
+  animation: heroBlob1 18s ease-in-out infinite;
+}
+
+.animate-hero-blob-2 {
+  animation: heroBlob2 22s ease-in-out infinite;
+}
+
+.animate-hero-blob-3 {
+  animation: heroBlob3 15s ease-in-out infinite;
+}
+
+.animate-hero-sparkle {
+  animation: heroSparkleTwinkle 4s ease-in-out infinite;
+}
+
+.animate-hero-pulse-ring {
+  animation: heroPulseRings 6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.animate-hero-float-1 {
+  animation: heroFloatBob1 5s ease-in-out infinite;
+}
+
+.animate-hero-float-2 {
+  animation: heroFloatBob2 7s ease-in-out infinite;
+}
+
+.animate-hero-float-3 {
+  animation: heroFloatBob3 6s ease-in-out infinite;
+}
+
+.animate-hero-sway {
+  animation: heroFloatSway 9s ease-in-out infinite;
+}
+
+.animate-hero-ecg {
+  animation: heroEcgPulse 3.5s ease-in-out infinite;
+}
+

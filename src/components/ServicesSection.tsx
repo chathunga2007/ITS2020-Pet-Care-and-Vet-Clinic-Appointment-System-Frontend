@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import SectionLiveBackground from "./SectionLiveBackground";
 import {
   Stethoscope,
   Activity,
@@ -78,9 +79,8 @@ export const ServicesSection: React.FC = () => {
   return (
     <section id="services" className="relative py-20 sm:py-24 bg-white dark:bg-[#07090e] transition-colors overflow-hidden">
       
-      {/* Decorative Paws */}
-      <div className="absolute top-10 right-10 text-teal-600/10 text-5xl select-none pointer-events-none">🐾</div>
-      <div className="absolute bottom-10 left-10 text-teal-600/10 text-5xl select-none pointer-events-none">🐾</div>
+      {/* Live Pet Animation Background */}
+      <SectionLiveBackground variant="services" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         

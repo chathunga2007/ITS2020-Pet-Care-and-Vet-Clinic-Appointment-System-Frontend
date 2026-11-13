@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import heroVetFamily from "../assets/hero-vet-family.jpg";
 import petcareHomeBg from "../assets/petcare home bg.png";
+import HeroLiveBackground from "./HeroLiveBackground";
 import {
   ArrowRight,
   Stethoscope,
@@ -13,24 +14,6 @@ import {
   CheckCircle2,
   Star
 } from "lucide-react";
-
-// Crisp Realistic SVG Paw Print Component for High Visibility
-const PawPrint: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={className}
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    {/* Main metacarpal pad */}
-    <path d="M12 9.8c-2.3 0-4.2 1.8-4.2 4.1 0 2 1.5 3.8 3.6 4.3.4.1.8.1 1.2 0 2.1-.5 3.6-2.3 3.6-4.3 0-2.3-1.9-4.1-4.2-4.1z" />
-    {/* 4 toe beans */}
-    <circle cx="6.5" cy="9" r="2" />
-    <circle cx="10" cy="5.8" r="2" />
-    <circle cx="14" cy="5.8" r="2" />
-    <circle cx="17.5" cy="9" r="2" />
-  </svg>
-);
 
 export const HeroSection: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
@@ -96,39 +79,8 @@ export const HeroSection: React.FC = () => {
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-to-b from-[#eaf8f6] via-[#f3fbf9] to-white dark:from-[#061e20] dark:via-[#072427] dark:to-[#07090e] pt-4 sm:pt-8 transition-colors duration-300">
       
-      {/* Ambient Lighting Orbs for Deep Depth */}
-      <div className="absolute top-10 right-1/4 w-[480px] h-[480px] bg-teal-300/25 dark:bg-teal-500/15 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-36 left-10 w-[380px] h-[380px] bg-emerald-300/20 dark:bg-emerald-500/15 rounded-full blur-[90px] pointer-events-none" />
-
-      {/* High-Visibility Walking Paw Footprints (Beautiful & Clear in Both Light & Dark Mode) */}
-      {/* Pair 1: Top-Left Walking Steps */}
-      <div className="absolute top-6 sm:top-10 left-6 sm:left-14 flex items-center gap-2 select-none pointer-events-none transform -rotate-12 animate-pulse-slow">
-        <PawPrint className="w-8 h-8 sm:w-11 sm:h-11 text-teal-600/40 dark:text-teal-300/50 drop-shadow-[0_2px_8px_rgba(13,148,136,0.3)] dark:drop-shadow-[0_0_12px_rgba(45,212,191,0.5)]" />
-        <PawPrint className="w-7 h-7 sm:w-9 sm:h-9 text-teal-700/45 dark:text-teal-200/55 transform translate-y-3 rotate-6 drop-shadow-[0_2px_8px_rgba(13,148,136,0.3)] dark:drop-shadow-[0_0_12px_rgba(45,212,191,0.5)]" />
-      </div>
-
-      {/* Pair 2: Center-Top Walking Trail */}
-      <div className="absolute top-20 sm:top-24 left-1/3 flex items-center gap-2 select-none pointer-events-none transform rotate-18">
-        <PawPrint className="w-6 h-6 sm:w-8 sm:h-8 text-teal-600/35 dark:text-teal-400/45 drop-shadow-[0_2px_6px_rgba(13,148,136,0.25)] dark:drop-shadow-[0_0_10px_rgba(45,212,191,0.45)]" />
-        <PawPrint className="w-7 h-7 sm:w-9 sm:h-9 text-teal-700/40 dark:text-teal-300/50 transform translate-y-2.5 -rotate-6 drop-shadow-[0_2px_6px_rgba(13,148,136,0.25)] dark:drop-shadow-[0_0_10px_rgba(45,212,191,0.45)]" />
-      </div>
-
-      {/* Pair 3: Bottom-Left Stepping Accent */}
-      <div className="absolute top-[65%] sm:top-[60%] left-6 sm:left-12 flex items-center gap-2 select-none pointer-events-none transform -rotate-25">
-        <PawPrint className="w-8 h-8 sm:w-12 sm:h-12 text-teal-600/35 dark:text-teal-400/45 drop-shadow-[0_2px_8px_rgba(13,148,136,0.3)] dark:drop-shadow-[0_0_12px_rgba(45,212,191,0.5)]" />
-        <PawPrint className="w-7 h-7 sm:w-10 sm:h-10 text-teal-700/40 dark:text-teal-300/50 transform translate-y-3 rotate-12 drop-shadow-[0_2px_8px_rgba(13,148,136,0.3)] dark:drop-shadow-[0_0_12px_rgba(45,212,191,0.5)]" />
-      </div>
-
-      {/* Pair 4: Top-Right Behind Visual Card */}
-      <div className="absolute top-10 right-10 sm:right-28 flex items-center gap-2 select-none pointer-events-none transform rotate-35">
-        <PawPrint className="w-8 h-8 sm:w-10 sm:h-10 text-teal-600/35 dark:text-teal-400/45 drop-shadow-[0_2px_8px_rgba(13,148,136,0.25)] dark:drop-shadow-[0_0_12px_rgba(45,212,191,0.45)]" />
-        <PawPrint className="w-7 h-7 sm:w-8 sm:h-8 text-teal-700/40 dark:text-teal-300/50 transform translate-y-2.5 -rotate-10 drop-shadow-[0_2px_8px_rgba(13,148,136,0.25)] dark:drop-shadow-[0_0_12px_rgba(45,212,191,0.45)]" />
-      </div>
-
-      {/* Pair 5: Mid-Right Luminous Edge */}
-      <div className="absolute top-1/2 right-4 sm:right-8 flex items-center gap-1.5 select-none pointer-events-none transform -rotate-15">
-        <PawPrint className="w-9 h-9 sm:w-12 sm:h-12 text-teal-600/40 dark:text-teal-400/50 drop-shadow-[0_2px_10px_rgba(13,148,136,0.35)] dark:drop-shadow-[0_0_14px_rgba(45,212,191,0.55)]" />
-      </div>
+      {/* Hero Live Background Animation System (Living Aurora, Sequential Walking Trail, Floating Particles, Interactive Glow) */}
+      <HeroLiveBackground />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import SectionLiveBackground from "./SectionLiveBackground";
 import {
   Sparkles,
   ArrowRight,
@@ -51,6 +52,8 @@ export const PetBookingWorkflow: React.FC = () => {
 
   return (
     <section id="workflow" className="py-20 sm:py-24 bg-[#f8fcfb] dark:bg-[#07090e] relative overflow-hidden transition-colors border-t border-b border-teal-100/70 dark:border-white/5">
+      {/* Live Pet Animation Background */}
+      <SectionLiveBackground variant="workflow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
