@@ -8,7 +8,7 @@ export const CTASection: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
 
   return (
-    <section className="py-20 relative overflow-hidden bg-white dark:bg-[#07090e] transition-colors">
+    <section className="py-20 relative overflow-hidden transition-colors">
       {/* Live Pet Animation Background */}
       <SectionLiveBackground variant="cta" />
 

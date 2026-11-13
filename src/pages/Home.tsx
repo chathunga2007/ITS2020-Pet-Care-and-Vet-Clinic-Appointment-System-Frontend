@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import HomeLiveBackground from "../components/HomeLiveBackground";
 import HeroSection from "../components/HeroSection";
 import PetBookingWorkflow from "../components/PetBookingWorkflow";
 import ServicesSection from "../components/ServicesSection";
@@ -25,12 +26,15 @@ export const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f3faf8] text-slate-800 dark:bg-[#07090e] dark:text-slate-100 flex flex-col selection:bg-teal-600 selection:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-[#f3faf8] text-slate-800 dark:bg-[#07090e] dark:text-slate-100 flex flex-col selection:bg-teal-600 selection:text-white transition-colors duration-300 relative overflow-x-hidden">
+      {/* Seamless Whole-Page Live Mouse Spotlight & Ambient Aurora */}
+      <HomeLiveBackground />
+
       {/* Top Glass Navbar */}
       <Navbar />
 
-      {/* Main Home Sections */}
-      <main className="flex-1">
+      {/* Main Home Sections (Seamless Continuous Flow) */}
+      <main className="flex-1 relative z-10">
         {/* 1. Cinematic Pet Care Hero with Doctor Care Backdrop */}
         <HeroSection />
 

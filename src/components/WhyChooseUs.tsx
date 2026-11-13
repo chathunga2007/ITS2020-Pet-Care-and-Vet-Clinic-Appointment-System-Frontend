@@ -35,7 +35,7 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section id="why-us" className="py-20 sm:py-24 bg-[#f8fcfb] dark:bg-[#07090e] relative border-t border-b border-teal-100/70 dark:border-white/5 transition-colors overflow-hidden">
+    <section id="why-us" className="py-20 sm:py-24 relative transition-colors overflow-hidden">
       {/* Live Pet Animation Background */}
       <SectionLiveBackground variant="why-us" />
 

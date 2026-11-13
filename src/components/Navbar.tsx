@@ -31,6 +31,15 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -77,12 +86,18 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 pt-3 pb-2 px-3 sm:px-6 transition-all duration-300">
-      <div className="max-w-7xl mx-auto rounded-full bg-white/90 dark:bg-[#061e20]/90 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border border-teal-100/80 dark:border-teal-800/30 shadow-lg shadow-teal-900/5 dark:shadow-black/40 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 pt-2.5 sm:pt-3 pb-2 px-3 sm:px-6 transition-all duration-300">
+      <div
+        className={`max-w-7xl mx-auto rounded-full backdrop-blur-xl px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 border transition-all duration-300 flex items-center justify-between ${
+          isScrolled
+            ? "bg-white/95 dark:bg-[#061e20]/95 border-teal-200/90 dark:border-teal-700/60 shadow-xl shadow-teal-950/10 dark:shadow-black/60"
+            : "bg-white/90 dark:bg-[#061e20]/90 border-teal-100/80 dark:border-teal-800/30 shadow-md shadow-teal-900/5 dark:shadow-black/40"
+        }`}
+      >
         
         {/* Brand Logo & Title */}
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-full bg-teal-50 dark:bg-teal-950/60 border border-teal-200/80 dark:border-teal-700/40 flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform">
+        <Link to="/" className="flex items-center gap-2.5 group shrink-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-teal-50 dark:bg-teal-950/60 border border-teal-200/80 dark:border-teal-700/40 flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform">
             <img
               src={clinicLogo}
               alt="PetCare & Vet"
@@ -90,24 +105,24 @@ export const Navbar: React.FC = () => {
             />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-xl sm:text-2xl font-black tracking-tight text-[#0f3b46] dark:text-teal-300 group-hover:text-teal-600 transition-colors">
-              PetCare & Vet Clinic
+            <span className="text-lg sm:text-xl font-black tracking-tight text-[#0f3b46] dark:text-teal-300 group-hover:text-teal-600 transition-colors">
+              PetCare &amp; Vet Clinic
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1.5">
+        {/* Desktop Navigation Links (Grouped nicely in the center with space on both sides) */}
+        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 xl:gap-1.5 mx-auto px-2">
           {navLinks.map((item) => (
             <button
               key={item.name}
               onClick={() => handleLinkClick(item.href)}
-              className="px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-bold text-[#0f3b46] dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 transition-colors rounded-full hover:bg-teal-50 dark:hover:bg-white/5 flex items-center gap-1 lg:gap-1.5 cursor-pointer whitespace-nowrap"
+              className="px-2 lg:px-2.5 xl:px-3 py-1.5 text-xs lg:text-[13px] font-bold text-[#0f3b46] dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 transition-all rounded-full hover:bg-teal-50 dark:hover:bg-white/5 flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
-              <span className="text-xs">{item.icon}</span>
+              <span className="text-xs sm:text-sm">{item.icon}</span>
               <span>{item.name}</span>
               {item.badge && (
-                <span className="text-[9px] lg:text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20">
+                <span className="text-[9px] font-black px-1.5 py-0.2 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/25">
                   {item.badge}
                 </span>
               )}
@@ -116,13 +131,13 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Right Action Buttons */}
-        <div className="hidden md:flex items-center gap-2.5">
+        <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
           
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle Theme"
-            className="p-2 rounded-full bg-teal-50/70 dark:bg-white/5 hover:bg-teal-100 dark:hover:bg-white/10 border border-teal-100 dark:border-white/10 text-teal-800 dark:text-slate-200 transition-all cursor-pointer"
+            className="p-2 rounded-full bg-teal-50/80 dark:bg-white/5 hover:bg-teal-100 dark:hover:bg-white/10 border border-teal-100/80 dark:border-white/10 text-teal-800 dark:text-slate-200 transition-all cursor-pointer"
             title={`Switch to ${theme === "dark" ? "Light" : "Dark"} Mode`}
           >
             {theme === "dark" ? (
@@ -133,17 +148,17 @@ export const Navbar: React.FC = () => {
           </button>
 
           {!isAuthenticated ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 lg:gap-3">
               <Link
                 to="/login"
-                className="px-4 py-2 text-xs sm:text-sm font-bold rounded-full border border-teal-600/40 text-[#0f3b46] dark:text-teal-200 bg-white/80 dark:bg-white/5 hover:bg-teal-50 dark:hover:bg-white/10 transition-all shadow-sm flex items-center gap-1.5"
+                className="px-3.5 py-2 text-xs lg:text-sm font-bold text-[#0f3b46] dark:text-teal-200 hover:text-teal-700 dark:hover:text-teal-300 transition-colors flex items-center gap-1.5"
               >
                 <LogIn className="w-3.5 h-3.5 text-teal-700 dark:text-teal-400" />
                 <span>Login</span>
               </Link>
               <Link
                 to="/register"
-                className="px-5 py-2 text-xs sm:text-sm font-bold rounded-full bg-teal-700 hover:bg-teal-800 text-white shadow-md shadow-teal-800/20 hover:shadow-teal-800/30 transition-all flex items-center gap-1.5"
+                className="px-5 py-2 text-xs lg:text-sm font-bold rounded-full bg-teal-700 hover:bg-teal-800 text-white shadow-md shadow-teal-800/20 hover:shadow-teal-800/35 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-1.5"
               >
                 <UserPlus className="w-3.5 h-3.5 text-white" />
                 <span>Register</span>

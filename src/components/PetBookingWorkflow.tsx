@@ -51,7 +51,7 @@ export const PetBookingWorkflow: React.FC = () => {
   ];
 
   return (
-    <section id="workflow" className="py-20 sm:py-24 bg-[#f8fcfb] dark:bg-[#07090e] relative overflow-hidden transition-colors border-t border-b border-teal-100/70 dark:border-white/5">
+    <section id="workflow" className="py-20 sm:py-24 relative overflow-hidden transition-colors">
       {/* Live Pet Animation Background */}
       <SectionLiveBackground variant="workflow" />
 

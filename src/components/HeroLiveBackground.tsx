@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 
 // Crisp SVG Dog Paw (Metacarpal pad + 4 oval toe beans)
 const DogPawIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
@@ -30,65 +30,10 @@ const SparkleStarIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-
 );
 
 export const HeroLiveBackground: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      if (
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom
-      ) {
-        setMousePos({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        });
-        setIsHovered(true);
-      } else {
-        setIsHovered(false);
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
       
-      {/* =========================================================================
-          1. Dynamic Interactive Spotlight Cursor Glow (Follows Mouse Live)
-         ========================================================================= */}
-      <div
-        className="absolute inset-0 transition-opacity duration-700 pointer-events-none"
-        style={{
-          opacity: isHovered ? 1 : 0,
-          background: isHovered
-            ? `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, rgba(45, 212, 191, 0.22), transparent 75%)`
-            : "transparent",
-        }}
-      />
-
-      {/* =========================================================================
-          2. Living Aurora Gradient Mesh Blobs (Vibrant & High-Contrast)
-         ========================================================================= */}
-      {/* Top-Left Vibrant Mint/Teal Aurora */}
-      <div className="absolute -top-16 -left-16 w-[520px] sm:w-[650px] h-[520px] sm:h-[650px] bg-gradient-to-br from-teal-400/40 via-emerald-400/25 to-transparent dark:from-teal-500/25 dark:via-emerald-500/20 dark:to-transparent rounded-full blur-[100px] animate-hero-blob-1 pointer-events-none" />
-
-      {/* Top-Right Emerald / Medical Cyan Aura */}
-      <div className="absolute top-4 -right-20 w-[550px] sm:w-[700px] h-[550px] sm:h-[700px] bg-gradient-to-bl from-emerald-400/35 via-teal-400/30 to-sky-400/20 dark:from-emerald-500/25 dark:via-teal-500/20 dark:to-cyan-500/15 rounded-full blur-[110px] animate-hero-blob-2 pointer-events-none" />
-
-      {/* Center-Bottom Warm Honey Amber Glow */}
-      <div className="absolute top-[38%] left-[28%] w-[450px] sm:w-[580px] h-[450px] sm:h-[580px] bg-gradient-to-tr from-amber-300/20 via-teal-300/25 to-emerald-300/20 dark:from-amber-500/15 dark:via-teal-600/15 dark:to-emerald-500/15 rounded-full blur-[95px] animate-hero-blob-3 pointer-events-none" />
-
-      {/* =========================================================================
-          3. Animated Medical ECG Vitality Wave (Clean Clinical Rhythm Line)
-         ========================================================================= */}
+      {/* 1. Animated Medical ECG Vitality Wave (Clean Clinical Rhythm Line) */}
       <div className="hidden xl:flex absolute top-12 left-1/2 -translate-x-1/2 z-10 items-center gap-2 animate-hero-ecg pointer-events-none">
         <svg width="120" height="24" viewBox="0 0 120 24" fill="none" className="text-teal-600/70 dark:text-teal-400/80">
           <path
@@ -102,12 +47,10 @@ export const HeroLiveBackground: React.FC = () => {
         <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-ping" />
       </div>
 
-      {/* =========================================================================
-          4. Sequential Animated Walking Paw Footprint Trails
-         ========================================================================= */}
+      {/* 2. Sequential Animated Walking Paw Footprint Trails */}
       {/* Left Walking Trail: 4 Steps spaced comfortably down the left side */}
       <div
-        className="absolute left-[7%] top-[12%] text-teal-700/80 dark:text-teal-300 drop-shadow-[0_4px_12px_rgba(13,148,136,0.45)] dark:drop-shadow-[0_0_16px_rgba(45,212,191,0.7)]"
+        className="absolute left-[7%] top-[12%] text-teal-700/80 dark:text-teal-300 drop-shadow-[0_4px_12px_rgba(13,148,136,0.35)] dark:drop-shadow-[0_0_16px_rgba(45,212,191,0.6)]"
         style={{
           "--step-rot": "18deg",
           animation: "heroPawStepPop 5s infinite",
@@ -118,7 +61,7 @@ export const HeroLiveBackground: React.FC = () => {
       </div>
 
       <div
-        className="absolute left-[11%] top-[25%] text-teal-700/80 dark:text-teal-300 drop-shadow-[0_4px_12px_rgba(13,148,136,0.45)] dark:drop-shadow-[0_0_16px_rgba(45,212,191,0.7)]"
+        className="absolute left-[11%] top-[25%] text-teal-700/80 dark:text-teal-300 drop-shadow-[0_4px_12px_rgba(13,148,136,0.35)] dark:drop-shadow-[0_0_16px_rgba(45,212,191,0.6)]"
         style={{
           "--step-rot": "26deg",
           animation: "heroPawStepPop 5s infinite",
@@ -129,7 +72,7 @@ export const HeroLiveBackground: React.FC = () => {
       </div>
 
       <div
-        className="absolute left-[8%] top-[39%] text-emerald-700/80 dark:text-emerald-300 drop-shadow-[0_4px_12px_rgba(16,185,129,0.45)] dark:drop-shadow-[0_0_16px_rgba(52,211,153,0.7)]"
+        className="absolute left-[8%] top-[39%] text-emerald-700/80 dark:text-emerald-300 drop-shadow-[0_4px_12px_rgba(16,185,129,0.35)] dark:drop-shadow-[0_0_16px_rgba(52,211,153,0.6)]"
         style={{
           "--step-rot": "15deg",
           animation: "heroPawStepPop 5s infinite",
@@ -140,7 +83,7 @@ export const HeroLiveBackground: React.FC = () => {
       </div>
 
       <div
-        className="absolute left-[12%] top-[53%] text-emerald-700/80 dark:text-emerald-300 drop-shadow-[0_4px_12px_rgba(16,185,129,0.45)] dark:drop-shadow-[0_0_16px_rgba(52,211,153,0.7)]"
+        className="absolute left-[12%] top-[53%] text-emerald-700/80 dark:text-emerald-300 drop-shadow-[0_4px_12px_rgba(16,185,129,0.35)] dark:drop-shadow-[0_0_16px_rgba(52,211,153,0.6)]"
         style={{
           "--step-rot": "25deg",
           animation: "heroPawStepPop 5s infinite",
@@ -152,7 +95,7 @@ export const HeroLiveBackground: React.FC = () => {
 
       {/* Right Walking Trail: 4 Steps spaced comfortably down the right side */}
       <div
-        className="absolute right-[8%] top-[14%] text-teal-700/80 dark:text-teal-300 drop-shadow-[0_4px_12px_rgba(13,148,136,0.45)] dark:drop-shadow-[0_0_16px_rgba(45,212,191,0.7)]"
+        className="absolute right-[8%] top-[14%] text-teal-700/80 dark:text-teal-300 drop-shadow-[0_4px_12px_rgba(13,148,136,0.35)] dark:drop-shadow-[0_0_16px_rgba(45,212,191,0.6)]"
         style={{
           "--step-rot": "-20deg",
           animation: "heroPawStepPop 5s infinite",
@@ -163,7 +106,7 @@ export const HeroLiveBackground: React.FC = () => {
       </div>
 
       <div
-        className="absolute right-[12%] top-[27%] text-teal-700/80 dark:text-teal-300 drop-shadow-[0_4px_12px_rgba(13,148,136,0.45)] dark:drop-shadow-[0_0_16px_rgba(45,212,191,0.7)]"
+        className="absolute right-[12%] top-[27%] text-teal-700/80 dark:text-teal-300 drop-shadow-[0_4px_12px_rgba(13,148,136,0.35)] dark:drop-shadow-[0_0_16px_rgba(45,212,191,0.6)]"
         style={{
           "--step-rot": "-28deg",
           animation: "heroPawStepPop 5s infinite",
@@ -174,7 +117,7 @@ export const HeroLiveBackground: React.FC = () => {
       </div>
 
       <div
-        className="absolute right-[9%] top-[41%] text-emerald-700/80 dark:text-emerald-300 drop-shadow-[0_4px_12px_rgba(16,185,129,0.45)] dark:drop-shadow-[0_0_16px_rgba(52,211,153,0.7)]"
+        className="absolute right-[9%] top-[41%] text-emerald-700/80 dark:text-emerald-300 drop-shadow-[0_4px_12px_rgba(16,185,129,0.35)] dark:drop-shadow-[0_0_16px_rgba(52,211,153,0.6)]"
         style={{
           "--step-rot": "-16deg",
           animation: "heroPawStepPop 5s infinite",
@@ -185,7 +128,7 @@ export const HeroLiveBackground: React.FC = () => {
       </div>
 
       <div
-        className="absolute right-[13%] top-[55%] text-emerald-700/80 dark:text-emerald-300 drop-shadow-[0_4px_12px_rgba(16,185,129,0.45)] dark:drop-shadow-[0_0_16px_rgba(52,211,153,0.7)]"
+        className="absolute right-[13%] top-[55%] text-emerald-700/80 dark:text-emerald-300 drop-shadow-[0_4px_12px_rgba(16,185,129,0.35)] dark:drop-shadow-[0_0_16px_rgba(52,211,153,0.6)]"
         style={{
           "--step-rot": "-24deg",
           animation: "heroPawStepPop 5s infinite",
@@ -195,39 +138,30 @@ export const HeroLiveBackground: React.FC = () => {
         <CatPawIcon className="w-7 h-7 sm:w-9 sm:h-9" />
       </div>
 
-      {/* =========================================================================
-          5. Strategic Golden & Teal Twinkle Stars
-         ========================================================================= */}
-      {/* Top Left Sparkle */}
-      <div className="absolute top-10 left-[22%] animate-hero-sparkle text-amber-500 dark:text-amber-300">
+      {/* 3. Strategic Golden & Teal Twinkle Stars */}
+      <div className="absolute top-10 left-[22%] animate-hero-sparkle text-amber-500/80 dark:text-amber-300">
         <SparkleStarIcon className="w-5 h-5 sm:w-6 sm:h-6" />
       </div>
 
-      {/* Top Right Sparkle */}
-      <div className="absolute top-8 right-[24%] animate-hero-sparkle text-teal-500 dark:text-teal-300" style={{ animationDelay: "1.8s" }}>
+      <div className="absolute top-8 right-[24%] animate-hero-sparkle text-teal-500/80 dark:text-teal-300" style={{ animationDelay: "1.8s" }}>
         <SparkleStarIcon className="w-5 h-5 sm:w-6 sm:h-6" />
       </div>
 
-      {/* Mid Center Sparkle */}
-      <div className="absolute top-[48%] left-[48%] animate-hero-sparkle text-emerald-500 dark:text-emerald-300" style={{ animationDelay: "2.7s" }}>
+      <div className="absolute top-[48%] left-[48%] animate-hero-sparkle text-emerald-500/80 dark:text-emerald-300" style={{ animationDelay: "2.7s" }}>
         <SparkleStarIcon className="w-4 h-4 sm:w-5 sm:h-5" />
       </div>
 
-      {/* Lower Left Sparkle */}
-      <div className="absolute top-[78%] left-[18%] animate-hero-sparkle text-teal-600 dark:text-teal-200" style={{ animationDelay: "0.9s" }}>
+      <div className="absolute top-[78%] left-[18%] animate-hero-sparkle text-teal-600/80 dark:text-teal-200" style={{ animationDelay: "0.9s" }}>
         <SparkleStarIcon className="w-4 h-4 sm:w-5 sm:h-5" />
       </div>
 
-      {/* Lower Right Sparkle */}
-      <div className="absolute top-[76%] right-[20%] animate-hero-sparkle text-amber-500 dark:text-amber-300" style={{ animationDelay: "3.2s" }}>
+      <div className="absolute top-[76%] right-[20%] animate-hero-sparkle text-amber-500/80 dark:text-amber-300" style={{ animationDelay: "3.2s" }}>
         <SparkleStarIcon className="w-4 h-4 sm:w-6 sm:h-6" />
       </div>
 
-      {/* =========================================================================
-          6. Concentric Glow Ripple Rings
-         ========================================================================= */}
-      <div className="absolute top-[22%] left-1/4 w-36 h-36 rounded-full border-2 border-teal-500/30 dark:border-teal-400/35 animate-hero-pulse-ring pointer-events-none" />
-      <div className="absolute top-[60%] right-1/4 w-40 h-40 rounded-full border-2 border-emerald-500/30 dark:border-emerald-400/35 animate-hero-pulse-ring pointer-events-none" style={{ animationDelay: "3s" }} />
+      {/* 4. Concentric Glow Ripple Rings */}
+      <div className="absolute top-[22%] left-1/4 w-36 h-36 rounded-full border-2 border-teal-500/25 dark:border-teal-400/30 animate-hero-pulse-ring pointer-events-none" />
+      <div className="absolute top-[60%] right-1/4 w-40 h-40 rounded-full border-2 border-emerald-500/25 dark:border-emerald-400/30 animate-hero-pulse-ring pointer-events-none" style={{ animationDelay: "3s" }} />
 
     </div>
   );

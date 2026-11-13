@@ -77,7 +77,7 @@ export const ServicesSection: React.FC = () => {
   ];
 
   return (
-    <section id="services" className="relative py-20 sm:py-24 bg-white dark:bg-[#07090e] transition-colors overflow-hidden">
+    <section id="services" className="relative pt-8 sm:pt-12 pb-20 sm:pb-24 transition-colors overflow-hidden">
       
       {/* Live Pet Animation Background */}
       <SectionLiveBackground variant="services" />
@@ -85,7 +85,7 @@ export const ServicesSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 dark:bg-white/5 border border-teal-200/80 dark:border-white/10 text-teal-800 dark:text-teal-300 text-xs font-bold uppercase tracking-wider mb-3">
             <span>🐾</span>
             <span>Our Veterinary &amp; Pet Care Services</span>

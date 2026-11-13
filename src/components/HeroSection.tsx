@@ -77,7 +77,7 @@ export const HeroSection: React.FC = () => {
   ];
 
   return (
-    <section id="home" className="relative overflow-hidden bg-gradient-to-b from-[#eaf8f6] via-[#f3fbf9] to-white dark:from-[#061e20] dark:via-[#072427] dark:to-[#07090e] pt-4 sm:pt-8 transition-colors duration-300">
+    <section id="home" className="relative overflow-hidden pt-20 sm:pt-24 transition-colors duration-300">
       
       {/* Hero Live Background Animation System (Living Aurora, Sequential Walking Trail, Floating Particles, Interactive Glow) */}
       <HeroLiveBackground />
@@ -281,7 +281,7 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Wave Transition Header into Services Cards */}
-      <div className="relative pt-12 pb-6">
+      <div className="relative pt-10 pb-2">
         
         {/* Services Section Intro Banner */}
         <div className="text-center max-w-2xl mx-auto px-4 mb-8">
@@ -326,7 +326,7 @@ export const HeroSection: React.FC = () => {
         </div>
 
         {/* Deep Organic Wavy Ribbon with Stats & Script (Image 1 Bottom Ribbon) */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2">
           <div className="relative rounded-3xl bg-gradient-to-r from-[#033b3a] via-[#044c4a] to-[#033b3a] text-white p-6 sm:p-8 shadow-2xl overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-6 border border-teal-700/40">
             
             {/* Background Paw Watermark */}

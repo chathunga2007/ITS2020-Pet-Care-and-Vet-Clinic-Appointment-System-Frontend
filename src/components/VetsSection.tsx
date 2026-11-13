@@ -59,7 +59,7 @@ export const VetsSection: React.FC = () => {
   ];
 
   return (
-    <section id="specialists" className="py-20 sm:py-24 bg-white dark:bg-[#07090e] relative transition-colors overflow-hidden">
+    <section id="specialists" className="py-20 sm:py-24 relative transition-colors overflow-hidden">
       {/* Live Pet Animation Background */}
       <SectionLiveBackground variant="vets" />
 
