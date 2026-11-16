@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { Sparkles, Calendar, ArrowRight, CheckCircle2 } from "lucide-react";
 import SectionLiveBackground from "./SectionLiveBackground";
+import puppyGif from "../assets/puppy_gif.gif";
 
 export const CTASection: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
 
   return (
     <section className="py-20 relative overflow-hidden transition-colors">
-      {/* Live Pet Animation Background */}
       <SectionLiveBackground variant="cta" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        <div className="relative rounded-3xl p-8 sm:p-12 lg:p-16 overflow-hidden bg-gradient-to-r from-teal-50 via-[#f0fbf9] to-teal-100/50 dark:from-[#062022] dark:via-[#08292c] dark:to-[#062022] border border-teal-200/80 dark:border-teal-800/40 shadow-xl">
-          
-          <div className="relative z-10 max-w-3xl">
+
+        <div className="relative rounded-3xl p-8 sm:p-12 lg:p-16 overflow-hidden bg-gradient-to-r from-teal-50 via-[#f0fbf9] to-teal-100/50 dark:from-[#062022] dark:via-[#08292c] dark:to-[#062022] border border-teal-200/80 dark:border-teal-800/40 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-8">
+
+          <div className="relative z-10 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-100/80 dark:bg-white/5 border border-teal-200 dark:border-white/10 text-teal-800 dark:text-teal-300 text-xs font-black uppercase tracking-wider mb-4">
               <Sparkles className="w-3.5 h-3.5 text-teal-600" />
               <span>{isAuthenticated ? "Welcome Back!" : "Join Our Pet Care Community"}</span>
@@ -42,7 +42,6 @@ export const CTASection: React.FC = () => {
                 : "Create a free PetCare & Vet account in under 60 seconds. Schedule instant appointments, track medical histories, access online prescriptions, and receive 24/7 emergency support."}
             </p>
 
-            {/* Checklist */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {[
                 "Instant Online Appointment Scheduling",
@@ -57,7 +56,6 @@ export const CTASection: React.FC = () => {
               ))}
             </div>
 
-            {/* Actions */}
             <div className="flex flex-col sm:flex-row items-center gap-4">
               {!isAuthenticated ? (
                 <>
@@ -77,19 +75,37 @@ export const CTASection: React.FC = () => {
                   </Link>
                 </>
               ) : (
-                <button
-                  onClick={() => {
-                    const el = document.getElementById("services");
-                    if (el) el.scrollIntoView({ behavior: "smooth" });
-                  }}
+                <Link
+                  to={user?.roles?.some(r => r.toUpperCase() === "ADMIN") ? "/admin/dashboard" : "/user/book"}
                   className="w-full sm:w-auto px-8 py-4 rounded-full bg-teal-700 hover:bg-teal-800 text-white font-extrabold text-base shadow-xl shadow-teal-800/25 hover:shadow-teal-800/35 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Calendar className="w-5 h-5 text-white" />
-                  <span>Browse Clinic Services &amp; Schedule</span>
-                </button>
+                  <span>
+                    {user?.roles?.some(r => r.toUpperCase() === "ADMIN")
+                      ? "Manage Appointments in Admin Console"
+                      : "Schedule an Appointment Online"}
+                  </span>
+                </Link>
               )}
             </div>
 
+          </div>
+
+          <div className="hidden lg:flex flex-col items-center justify-center relative shrink-0">
+            <div className="relative w-44 h-44 xl:w-52 xl:h-52">
+              <div className="absolute inset-2 bg-gradient-to-tr from-teal-400/30 to-emerald-400/30 rounded-full blur-xl" />
+              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-4 bg-teal-950/20 dark:bg-black/60 rounded-full blur-sm" />
+              <img
+                src={puppyGif}
+                alt="Clinic Puppy Mascot"
+                className="w-full h-full object-contain filter drop-shadow-xl transform hover:scale-105 transition-transform"
+              />
+            </div>
+            <div className="mt-2 text-center">
+              <span className="font-handwriting text-xl text-teal-800 dark:text-teal-200 font-bold">
+                Always Happy to See You! 🐾
+              </span>
+            </div>
           </div>
 
         </div>

@@ -13,7 +13,10 @@ import {
   Sun,
   Moon,
   LogIn,
-  UserPlus
+  UserPlus,
+  Dog,
+  Stethoscope,
+  ClipboardList
 } from "lucide-react";
 import Swal from "../utils/sweetalert";
 
@@ -41,19 +44,28 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogout = () => {
-    logout();
-    setUserDropdownOpen(false);
-    Swal.fire({
-      icon: "success",
-      title: "Logged Out",
-      text: "You have been signed out successfully.",
-      timer: 1500,
+  const handleLogout = async () => {
+    const confirmed = await Swal.confirm({
+      title: "Sign Out?",
+      text: "Are you sure you want to log out of your account?",
+      confirmButtonText: "Yes, Sign Out",
+      cancelButtonText: "Cancel",
     });
-    navigate("/");
+
+    if (confirmed) {
+      logout();
+      setUserDropdownOpen(false);
+      setMobileMenuOpen(false);
+      Swal.fire({
+        icon: "success",
+        title: "Signed Out",
+        text: "You have been logged out successfully.",
+        timer: 1500,
+      });
+      navigate("/");
+    }
   };
 
-  // Nav links matching the AI design layout with all clinic pages & sections in orderly sequence
   const navLinks: NavLinkItem[] = [
     { name: "Home", href: "/#home", icon: "🏠" },
     { name: "Services", href: "/#services", icon: "🐾" },
@@ -88,14 +100,12 @@ export const Navbar: React.FC = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 pt-2.5 sm:pt-3 pb-2 px-3 sm:px-6 transition-all duration-300">
       <div
-        className={`max-w-7xl mx-auto rounded-full backdrop-blur-xl px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 border transition-all duration-300 flex items-center justify-between ${
-          isScrolled
+        className={`max-w-7xl mx-auto rounded-full backdrop-blur-xl px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 border transition-all duration-300 flex items-center justify-between ${isScrolled
             ? "bg-white/95 dark:bg-[#061e20]/95 border-teal-200/90 dark:border-teal-700/60 shadow-xl shadow-teal-950/10 dark:shadow-black/60"
             : "bg-white/90 dark:bg-[#061e20]/90 border-teal-100/80 dark:border-teal-800/30 shadow-md shadow-teal-900/5 dark:shadow-black/40"
-        }`}
+          }`}
       >
-        
-        {/* Brand Logo & Title */}
+
         <Link to="/" className="flex items-center gap-2.5 group shrink-0">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-teal-50 dark:bg-teal-950/60 border border-teal-200/80 dark:border-teal-700/40 flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform">
             <img
@@ -111,13 +121,12 @@ export const Navbar: React.FC = () => {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links (Grouped nicely in the center with space on both sides) */}
-        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 xl:gap-1.5 mx-auto px-2">
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 mx-auto px-2">
           {navLinks.map((item) => (
             <button
               key={item.name}
               onClick={() => handleLinkClick(item.href)}
-              className="px-2 lg:px-2.5 xl:px-3 py-1.5 text-xs lg:text-[13px] font-bold text-[#0f3b46] dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 transition-all rounded-full hover:bg-teal-50 dark:hover:bg-white/5 flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+              className="px-2.5 xl:px-3 py-1.5 text-xs xl:text-[13px] font-bold text-[#0f3b46] dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 transition-all rounded-full hover:bg-teal-50 dark:hover:bg-white/5 flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
               <span className="text-xs sm:text-sm">{item.icon}</span>
               <span>{item.name}</span>
@@ -130,10 +139,7 @@ export const Navbar: React.FC = () => {
           ))}
         </nav>
 
-        {/* Right Action Buttons */}
-        <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
-          
-          {/* Theme Toggle Button */}
+        <div className="hidden lg:flex items-center gap-2 lg:gap-3 shrink-0">
           <button
             onClick={toggleTheme}
             aria-label="Toggle Theme"
@@ -180,28 +186,88 @@ export const Navbar: React.FC = () => {
               </button>
 
               {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white dark:bg-themeDark-900 border border-teal-100 dark:border-white/10 shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="absolute right-0 mt-2 w-60 rounded-2xl bg-white dark:bg-[#072124] border border-teal-100 dark:border-teal-700/60 shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                   <div className="px-3 py-2 border-b border-teal-100 dark:border-white/10 mb-1">
-                    <p className="text-xs text-slate-500 dark:text-slate-400">Signed in as</p>
-                    <p className="text-sm font-bold text-[#0f3b46] dark:text-white truncate">{user?.email}</p>
+                    <p className="text-[10px] uppercase font-bold text-slate-400">Signed in as</p>
+                    <p className="text-xs font-bold text-[#0f3b46] dark:text-white truncate">{user?.email}</p>
+                    {isAdmin && (
+                      <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 font-black text-[9px]">
+                        ADMINISTRATOR
+                      </span>
+                    )}
                   </div>
 
-                  <button
-                    onClick={() => {
-                      setUserDropdownOpen(false);
-                      handleLinkClick("/#services");
-                    }}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
-                  >
-                    <Calendar className="w-4 h-4 text-teal-600" />
-                    <span>Book Appointments</span>
-                  </button>
-
-                  {isAdmin && (
-                    <div className="px-3 py-2 text-xs font-bold text-amber-600 flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4" />
-                      <span>Admin Access</span>
-                    </div>
+                  {/* Role Specific Dropdown Links */}
+                  {isAdmin ? (
+                    <>
+                      <Link
+                        to="/admin/dashboard"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
+                      >
+                        <ShieldCheck className="w-4 h-4 text-amber-500" />
+                        <span>Operations Dashboard</span>
+                      </Link>
+                      <Link
+                        to="/admin/appointments"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
+                      >
+                        <Calendar className="w-4 h-4 text-teal-600" />
+                        <span>All Appointments</span>
+                      </Link>
+                      <Link
+                        to="/admin/doctors"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
+                      >
+                        <Stethoscope className="w-4 h-4 text-teal-600" />
+                        <span>Manage Doctors</span>
+                      </Link>
+                      <Link
+                        to="/admin/pets"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
+                      >
+                        <Dog className="w-4 h-4 text-teal-600" />
+                        <span>Pet Registry</span>
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/user/dashboard"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
+                      >
+                        <Calendar className="w-4 h-4 text-teal-600" />
+                        <span>My Dashboard</span>
+                      </Link>
+                      <Link
+                        to="/user/pets"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
+                      >
+                        <Dog className="w-4 h-4 text-teal-600" />
+                        <span>My Pets</span>
+                      </Link>
+                      <Link
+                        to="/user/book"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
+                      >
+                        <Calendar className="w-4 h-4 text-teal-600" />
+                        <span>Book Appointment</span>
+                      </Link>
+                      <Link
+                        to="/user/appointments"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-teal-50 dark:hover:bg-white/5 rounded-xl transition-colors text-left"
+                      >
+                        <ClipboardList className="w-4 h-4 text-teal-600" />
+                        <span>My Appointments</span>
+                      </Link>
+                    </>
                   )}
 
                   <div className="border-t border-teal-100 dark:border-white/10 my-1" />
@@ -219,8 +285,8 @@ export const Navbar: React.FC = () => {
           )}
         </div>
 
-        {/* Mobile Menu & Theme Toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        {/* Mobile & Tablet Menu Controls (< lg) */}
+        <div className="flex lg:hidden items-center gap-2">
           <button
             onClick={toggleTheme}
             className="p-1.5 rounded-full bg-teal-50 dark:bg-white/5 border border-teal-100 dark:border-white/10 text-teal-800 dark:text-slate-200"
@@ -229,7 +295,7 @@ export const Navbar: React.FC = () => {
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 rounded-full bg-teal-50 dark:bg-themeDark-800 text-teal-800 dark:text-slate-200 border border-teal-100 dark:border-white/10"
+            className="p-1.5 rounded-full bg-teal-50 dark:bg-themeDark-800 text-teal-800 dark:text-slate-200 border border-teal-100 dark:border-white/10 cursor-pointer"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -238,9 +304,8 @@ export const Navbar: React.FC = () => {
 
       </div>
 
-      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-2 rounded-3xl bg-white/95 dark:bg-[#061e20]/95 backdrop-blur-xl border border-teal-100 dark:border-white/10 p-4 shadow-xl space-y-3">
+        <div className="lg:hidden mt-2 rounded-3xl bg-white/95 dark:bg-[#061e20]/95 backdrop-blur-xl border border-teal-100 dark:border-white/10 p-4 shadow-xl space-y-3">
           <div className="space-y-1">
             {navLinks.map((item) => (
               <button
@@ -290,9 +355,28 @@ export const Navbar: React.FC = () => {
                     <p className="text-[10px] text-slate-500 dark:text-slate-400">{user?.email}</p>
                   </div>
                 </div>
+
+                {isAdmin ? (
+                  <Link
+                    to="/admin/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-2 text-center text-xs font-bold text-amber-700 dark:text-amber-300 bg-amber-500/10 rounded-full block border border-amber-500/30"
+                  >
+                    🛡️ Admin Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    to="/user/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-2 text-center text-xs font-bold text-teal-800 dark:text-teal-300 bg-teal-50 dark:bg-white/5 rounded-full block border border-teal-200"
+                  >
+                    🐾 Open Member Dashboard
+                  </Link>
+                )}
+
                 <button
                   onClick={handleLogout}
-                  className="w-full py-2 text-center text-xs font-bold text-red-500 bg-red-50 dark:bg-red-500/10 rounded-full"
+                  className="w-full py-2 text-center text-xs font-bold text-red-500 bg-red-50 dark:bg-red-500/10 rounded-full cursor-pointer"
                 >
                   Sign Out
                 </button>

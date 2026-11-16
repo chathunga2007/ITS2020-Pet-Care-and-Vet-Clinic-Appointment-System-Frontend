@@ -52,12 +52,10 @@ export const PetBookingWorkflow: React.FC = () => {
 
   return (
     <section id="workflow" className="py-20 sm:py-24 relative overflow-hidden transition-colors">
-      {/* Live Pet Animation Background */}
       <SectionLiveBackground variant="workflow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 dark:bg-white/5 border border-teal-200/80 dark:border-white/10 text-teal-800 dark:text-teal-300 text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles className="w-3.5 h-3.5 text-teal-600" />
@@ -73,7 +71,6 @@ export const PetBookingWorkflow: React.FC = () => {
           </p>
         </div>
 
-        {/* 4 Steps Visual Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {steps.map((step) => (
             <div
@@ -107,7 +104,6 @@ export const PetBookingWorkflow: React.FC = () => {
           ))}
         </div>
 
-        {/* Action Call to Sign In & Book */}
         <div className="relative rounded-3xl p-8 sm:p-10 border border-teal-100 dark:border-white/15 bg-gradient-to-r from-teal-50 via-white to-teal-50 dark:from-[#062022] dark:via-[#08292c] dark:to-[#062022] shadow-xl flex flex-col lg:flex-row items-center justify-between gap-8">
 
           <div className="max-w-2xl">
@@ -143,7 +139,6 @@ export const PetBookingWorkflow: React.FC = () => {
             </div>
           </div>
 
-          {/* Action Button */}
           <div className="shrink-0 w-full sm:w-auto flex flex-col sm:flex-row items-center gap-3">
             {!isAuthenticated ? (
               <>
@@ -162,13 +157,13 @@ export const PetBookingWorkflow: React.FC = () => {
                 </Link>
               </>
             ) : (
-              <a
-                href="#services"
+              <Link
+                to={user?.roles?.some(r => r.toUpperCase() === "ADMIN") ? "/admin/dashboard" : "/user/book"}
                 className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-teal-700 hover:bg-teal-800 text-white font-extrabold text-sm shadow-xl shadow-teal-800/25 flex items-center justify-center gap-2 transition-all"
               >
-                <span>Browse Clinical Services</span>
+                <span>{user?.roles?.some(r => r.toUpperCase() === "ADMIN") ? "Open Admin Console" : "Book Pet Appointment"}</span>
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             )}
           </div>
 

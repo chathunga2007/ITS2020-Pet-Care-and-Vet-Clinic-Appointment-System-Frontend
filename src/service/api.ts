@@ -10,29 +10,38 @@ const api = axios.create({
   },
 });
 
-const PUBLIC_ENDPOINTS = ["auth/login", "auth/register", "auth/refresh"];
+const NO_AUTH_ENDPOINTS = [
+  "auth/login",
+  "auth/register",
+  "auth/refresh",
+  "auth/forgot-password",
+  "auth/reset-password",
+];
 
-// Request Interceptor: Attach Access Token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("ACCESS_TOKEN");
-  const isPublic = PUBLIC_ENDPOINTS.some((url) => config.url?.includes(url));
+  const isNoAuth = NO_AUTH_ENDPOINTS.some((url) => config.url?.includes(url));
 
-  if (token && !isPublic) {
+  if (token && !isNoAuth) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  if (config.data instanceof FormData) {
+    delete config.headers["Content-Type"];
+  }
+
   return config;
 });
 
-// Response Interceptor: Auto Refresh Token on 401
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest: any = error.config;
     if (!originalRequest) return Promise.reject(error);
 
-    const isPublic = PUBLIC_ENDPOINTS.some((url) => originalRequest.url?.includes(url));
+    const isNoAuth = NO_AUTH_ENDPOINTS.some((url) => originalRequest.url?.includes(url));
 
-    if (error.response?.status === 401 && !originalRequest._isRefresh && !isPublic) {
+    if (error.response?.status === 401 && !originalRequest._isRefresh && !isNoAuth) {
       originalRequest._isRefresh = true;
       try {
         const refreshToken = localStorage.getItem("REFRESH_TOKEN");
@@ -51,7 +60,6 @@ api.interceptors.response.use(
         localStorage.removeItem("ACCESS_TOKEN");
         localStorage.removeItem("REFRESH_TOKEN");
         localStorage.removeItem("USER_DATA");
-        // Only redirect if not already on login or register or home
         if (
           !window.location.pathname.includes("/login") &&
           !window.location.pathname.includes("/register") &&
@@ -68,4 +76,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-

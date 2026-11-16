@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import HomeLiveBackground from "../components/HomeLiveBackground";
 import HeroSection from "../components/HeroSection";
+import PuppyLineBanner from "../components/PuppyLineBanner";
 import PetBookingWorkflow from "../components/PetBookingWorkflow";
 import ServicesSection from "../components/ServicesSection";
 import WhyChooseUs from "../components/WhyChooseUs";
@@ -10,7 +11,6 @@ import CTASection from "../components/CTASection";
 import Footer from "../components/Footer";
 
 export const Home: React.FC = () => {
-  // Handle smooth scrolling when navigated with hash from other routes
   React.useEffect(() => {
     if (window.location.hash) {
       const id = window.location.hash.replace("#", "");
@@ -27,34 +27,26 @@ export const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f3faf8] text-slate-800 dark:bg-[#07090e] dark:text-slate-100 flex flex-col selection:bg-teal-600 selection:text-white transition-colors duration-300 relative overflow-x-hidden">
-      {/* Seamless Whole-Page Live Mouse Spotlight & Ambient Aurora */}
       <HomeLiveBackground />
 
-      {/* Top Glass Navbar */}
       <Navbar />
 
-      {/* Main Home Sections (Seamless Continuous Flow) */}
       <main className="flex-1 relative z-10">
-        {/* 1. Cinematic Pet Care Hero with Doctor Care Backdrop */}
         <HeroSection />
 
-        {/* 2. Clinical Services & 24/7 Emergency */}
+        <PuppyLineBanner />
+
         <ServicesSection />
 
-        {/* 3. Why Choose Us */}
         <WhyChooseUs />
 
-        {/* 4. Certified Specialists Doctors */}
         <VetsSection />
 
-        {/* 5. How Appointments Work for Members */}
         <PetBookingWorkflow />
 
-        {/* 6. Guest Conversion CTA Banner */}
         <CTASection />
       </main>
 
-      {/* Modern Clinic Footer */}
       <Footer />
     </div>
   );
