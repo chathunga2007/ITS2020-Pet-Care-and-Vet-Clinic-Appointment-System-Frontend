@@ -26,8 +26,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# External directories / subprojects
-ITS2020-Pet-Care-and-Vet-Clinic-Appointment-System-Backend
-rad-article-web
-.env
