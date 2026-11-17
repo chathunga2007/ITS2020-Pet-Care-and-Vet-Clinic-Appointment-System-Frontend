@@ -4,8 +4,10 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import { getMyPets } from "../../service/pet.service";
 import { getAllDoctors, getDoctorSchedules, type IDoctorScheduleItem } from "../../service/doctor.service";
 import { createAppointment, getBookedSlots } from "../../service/appointment.service";
+import { getAllServices } from "../../service/service.service";
 import type { IPet } from "../../types/pet.types";
 import type { IDoctor } from "../../types/doctor.types";
+import type { IService } from "../../types/service.types";
 import {
   Calendar,
   Clock,
@@ -16,6 +18,7 @@ import {
   AlertCircle,
   CheckCircle2,
   MailCheck,
+  Sparkles,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import Swal from "../../utils/sweetalert";
@@ -60,6 +63,8 @@ export const UserBookAppointment: React.FC = () => {
 
   const [pets, setPets] = useState<IPet[]>([]);
   const [doctors, setDoctors] = useState<IDoctor[]>([]);
+  const [services, setServices] = useState<IService[]>([]);
+  const [selectedServiceId, setSelectedServiceId] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   const [selectedPetId, setSelectedPetId] = useState<string>(
@@ -87,18 +92,23 @@ export const UserBookAppointment: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [petsData, docsData] = await Promise.all([
+        const [petsData, docsData, servicesData] = await Promise.all([
           getMyPets(),
           getAllDoctors(),
+          getAllServices().catch(() => []),
         ]);
         setPets(petsData);
         setDoctors(docsData);
+        setServices(servicesData);
 
         if (petsData.length > 0 && !selectedPetId) {
           setSelectedPetId(petsData[0]._id);
         }
         if (docsData.length > 0 && !selectedDoctorId) {
           setSelectedDoctorId(docsData[0]._id);
+        }
+        if (servicesData.length > 0 && !selectedServiceId) {
+          setSelectedServiceId(servicesData[0]._id);
         }
       } catch (err: any) {
         console.error(err);
@@ -142,6 +152,7 @@ export const UserBookAppointment: React.FC = () => {
   }, [selectedDoctorId, appointmentDate]);
 
   const currentDoctor = doctors.find((d) => d._id === selectedDoctorId);
+  const currentService = services.find((s) => s._id === selectedServiceId);
 
   const dayOfWeekName = useMemo(() => {
     if (!appointmentDate) return "";
@@ -216,6 +227,7 @@ export const UserBookAppointment: React.FC = () => {
       await createAppointment({
         petId: selectedPetId,
         doctorId: selectedDoctorId,
+        serviceId: selectedServiceId || undefined,
         appointmentDate: appointmentDate,
         time: selectedTime,
         reason: reason.trim(),
@@ -224,8 +236,9 @@ export const UserBookAppointment: React.FC = () => {
       await Swal.fire({
         icon: "success",
         title: "Appointment Booked!",
-        text: `Your consultation on ${appointmentDate} at ${selectedTime} with ${currentDoctor?.name || "the doctor"
-          } has been submitted. A confirmation email has been dispatched to your email address!`,
+        text: `Your consultation on ${appointmentDate} at ${selectedTime} with ${
+          currentDoctor?.name || "the doctor"
+        }${currentService ? ` for "${currentService.name}"` : ""} has been submitted. A confirmation email has been dispatched to your email address!`,
         confirmButtonText: "View My Appointments",
       });
 
@@ -313,8 +326,8 @@ export const UserBookAppointment: React.FC = () => {
                       type="button"
                       onClick={() => setSelectedPetId(p._id)}
                       className={`p-3.5 rounded-2xl border text-left transition-all flex items-center gap-3 cursor-pointer ${selectedPetId === p._id
-                          ? "bg-teal-50 dark:bg-teal-900/40 border-teal-600 ring-2 ring-teal-500/30 shadow-md"
-                          : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 hover:border-teal-400"
+                        ? "bg-teal-50 dark:bg-teal-900/40 border-teal-600 ring-2 ring-teal-500/30 shadow-md"
+                        : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 hover:border-teal-400"
                         }`}
                     >
                       <div className="w-11 h-11 rounded-xl overflow-hidden bg-teal-100 dark:bg-white/10 shrink-0">
@@ -359,8 +372,8 @@ export const UserBookAppointment: React.FC = () => {
                         type="button"
                         onClick={() => setSelectedDoctorId(doc._id)}
                         className={`p-3.5 rounded-2xl border text-left transition-all flex items-center gap-3 cursor-pointer ${selectedDoctorId === doc._id
-                            ? "bg-teal-50 dark:bg-teal-900/40 border-teal-600 ring-2 ring-teal-500/30 shadow-md"
-                            : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 hover:border-teal-400"
+                          ? "bg-teal-50 dark:bg-teal-900/40 border-teal-600 ring-2 ring-teal-500/30 shadow-md"
+                          : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 hover:border-teal-400"
                           }`}
                       >
                         <div className="w-12 h-12 rounded-xl overflow-hidden bg-teal-100 dark:bg-white/10 shrink-0">
@@ -481,12 +494,12 @@ export const UserBookAppointment: React.FC = () => {
                           disabled={isDisabled}
                           onClick={() => setSelectedTime(slot)}
                           className={`py-3 px-2 rounded-2xl text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 border relative ${isBooked
-                              ? "bg-rose-50/50 dark:bg-rose-950/20 text-rose-400 dark:text-rose-500 border-rose-200/50 dark:border-rose-900/30 cursor-not-allowed line-through opacity-75"
-                              : outOfHours
-                                ? "bg-slate-100/50 dark:bg-white/5 text-slate-400 dark:text-slate-500 border-slate-200/50 dark:border-white/5 cursor-not-allowed opacity-50"
-                                : isSelected
-                                  ? "bg-teal-700 text-white border-teal-700 ring-2 ring-teal-500/50 shadow-md transform -translate-y-0.5 cursor-pointer"
-                                  : "bg-slate-50 dark:bg-white/5 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-white/10 hover:border-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950/40 cursor-pointer"
+                            ? "bg-rose-50/50 dark:bg-rose-950/20 text-rose-400 dark:text-rose-500 border-rose-200/50 dark:border-rose-900/30 cursor-not-allowed line-through opacity-75"
+                            : outOfHours
+                              ? "bg-slate-100/50 dark:bg-white/5 text-slate-400 dark:text-slate-500 border-slate-200/50 dark:border-white/5 cursor-not-allowed opacity-50"
+                              : isSelected
+                                ? "bg-teal-700 text-white border-teal-700 ring-2 ring-teal-500/50 shadow-md transform -translate-y-0.5 cursor-pointer"
+                                : "bg-slate-50 dark:bg-white/5 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-white/10 hover:border-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950/40 cursor-pointer"
                             }`}
                         >
                           <div className="flex items-center gap-1">
@@ -524,9 +537,80 @@ export const UserBookAppointment: React.FC = () => {
                 )}
               </div>
 
+              {/* Step 5: Select Clinical Service / Treatment */}
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-2.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
+                    5. Select Clinical Service / Treatment *
+                  </label>
+                  {services.length > 0 && (
+                    <span className="text-[11px] font-semibold text-slate-400">
+                      {services.length} Services Available
+                    </span>
+                  )}
+                </div>
+
+                {services.length === 0 ? (
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs text-slate-500">
+                    Standard general veterinary consulting service will be applied.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    {services.map((svc) => {
+                      const isSelected = selectedServiceId === svc._id;
+                      return (
+                        <button
+                          key={svc._id}
+                          type="button"
+                          onClick={() => setSelectedServiceId(svc._id)}
+                          className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between cursor-pointer relative group ${
+                            isSelected
+                              ? "bg-teal-50 dark:bg-teal-900/40 border-teal-600 ring-2 ring-teal-500/30 shadow-md"
+                              : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 hover:border-teal-400 hover:bg-teal-50/40 dark:hover:bg-teal-950/20"
+                          }`}
+                        >
+                          <div>
+                            <div className="flex items-start justify-between gap-2 mb-1.5">
+                              <h4 className="font-extrabold text-xs sm:text-sm text-slate-800 dark:text-white line-clamp-1">
+                                {svc.name}
+                              </h4>
+                              {isSelected ? (
+                                <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                              ) : (
+                                <Sparkles className="w-3.5 h-3.5 text-slate-400 group-hover:text-teal-500 shrink-0" />
+                              )}
+                            </div>
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mb-3">
+                              {svc.description || "General clinic treatment and care."}
+                            </p>
+                          </div>
+
+                          <div className="pt-2 border-t border-slate-200/60 dark:border-white/10 flex items-center justify-between text-xs">
+                            <span className="font-extrabold text-emerald-600 dark:text-emerald-400">
+                              LKR {svc.price.toLocaleString()}
+                            </span>
+                            <span className="text-[11px] text-slate-400 flex items-center gap-1 font-medium">
+                              <Clock className="w-3 h-3 text-slate-400" />
+                              {svc.durationMinutes || 30}m
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {currentService && (
+                  <p className="text-xs text-teal-700 dark:text-teal-300 font-bold mt-2.5 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                    <span>Selected Service: {currentService.name} (LKR {currentService.price.toLocaleString()} • {currentService.durationMinutes || 30} mins)</span>
+                  </p>
+                )}
+              </div>
+
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300 mb-1.5">
-                  5. Reason for Consultation &amp; Symptoms *
+                  6. Reason for Consultation &amp; Symptoms *
                 </label>
 
                 <div className="flex flex-wrap gap-2 mb-3">
@@ -536,8 +620,8 @@ export const UserBookAppointment: React.FC = () => {
                       type="button"
                       onClick={() => setReason(chip)}
                       className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${reason === chip
-                          ? "bg-teal-600 text-white border-teal-600 shadow-xs"
-                          : "bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:border-teal-400"
+                        ? "bg-teal-600 text-white border-teal-600 shadow-xs"
+                        : "bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:border-teal-400"
                         }`}
                     >
                       {chip}

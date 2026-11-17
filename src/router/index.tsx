@@ -16,6 +16,7 @@ import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
 import AdminAppointments from "../pages/admin/AdminAppointments";
 import AdminDoctors from "../pages/admin/AdminDoctors";
 import AdminPets from "../pages/admin/AdminPets";
+import AdminServices from "../pages/admin/AdminServices";
 
 import { useAuth } from "../hooks/useAuth";
 import { Loader2 } from "lucide-react";
@@ -130,6 +131,14 @@ export const AppRouter: React.FC = () => {
           element={
             <RequireAuth roles={["ADMIN"]}>
               <AdminPets />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin/services"
+          element={
+            <RequireAuth roles={["ADMIN"]}>
+              <AdminServices />
             </RequireAuth>
           }
         />

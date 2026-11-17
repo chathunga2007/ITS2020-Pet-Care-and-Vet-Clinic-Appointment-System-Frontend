@@ -17,7 +17,8 @@ import {
   ExternalLink,
   ChevronRight,
   ShieldCheck,
-  HeartHandshake
+  HeartHandshake,
+  Sparkles,
 } from "lucide-react";
 import Swal from "../utils/sweetalert";
 
@@ -106,6 +107,11 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       name: "Pet Registry",
       path: "/admin/pets",
       icon: <Dog className="w-5 h-5" />,
+    },
+    {
+      name: "Clinical Services",
+      path: "/admin/services",
+      icon: <Sparkles className="w-5 h-5" />,
     },
   ];
 

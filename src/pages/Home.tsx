@@ -9,6 +9,7 @@ import WhyChooseUs from "../components/WhyChooseUs";
 import VetsSection from "../components/VetsSection";
 import CTASection from "../components/CTASection";
 import Footer from "../components/Footer";
+import PetChatBot from "../components/PetChatBot";
 
 export const Home: React.FC = () => {
   React.useEffect(() => {
@@ -48,6 +49,9 @@ export const Home: React.FC = () => {
       </main>
 
       <Footer />
+
+      {/* Floating PetCare AI Chatbot on Landing Home Page */}
+      <PetChatBot />
     </div>
   );
 };

@@ -237,7 +237,6 @@ export const UserAppointments: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Status Badge (ALWAYS visible, right-aligned, within screen bounds) */}
                     <div className="shrink-0">
                       {statusBadge}
                     </div>
@@ -245,6 +244,19 @@ export const UserAppointments: React.FC = () => {
 
                   {/* Card Middle: Detailed Schedule & Reason */}
                   <div className="space-y-2 pt-2 border-t border-slate-100/90 dark:border-white/5 text-xs">
+                    {/* Booked Service Badge */}
+                    {appt.service && (
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-emerald-200/80 dark:border-emerald-800/40 w-fit">
+                        <span>✨ Service:</span>
+                        <span className="font-extrabold">{appt.service.name}</span>
+                        <span>•</span>
+                        <span className="font-bold">LKR {appt.service.price?.toLocaleString()}</span>
+                        {appt.service.durationMinutes && (
+                          <span className="text-[11px] text-slate-400 font-normal">({appt.service.durationMinutes} mins)</span>
+                        )}
+                      </div>
+                    )}
+
                     <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 flex-wrap">
                       <span className="flex items-center gap-1 font-semibold text-slate-700 dark:text-slate-300">
                         📅 {formattedDate}

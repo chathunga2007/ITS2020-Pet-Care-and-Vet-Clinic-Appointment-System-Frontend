@@ -16,6 +16,7 @@ const NO_AUTH_ENDPOINTS = [
   "auth/refresh",
   "auth/forgot-password",
   "auth/reset-password",
+  "ai/chat",
 ];
 
 api.interceptors.request.use((config) => {

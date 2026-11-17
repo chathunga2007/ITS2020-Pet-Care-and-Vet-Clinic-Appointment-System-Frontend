@@ -24,11 +24,20 @@ export interface IAppointmentDoctor {
   imageURL?: string;
 }
 
+export interface IAppointmentService {
+  _id: string;
+  name: string;
+  description?: string;
+  price: number;
+  durationMinutes?: number;
+}
+
 export interface IAppointment {
   _id: string;
   user: IAppointmentUser;
   pet: IAppointmentPet;
   doctor: IAppointmentDoctor;
+  service?: IAppointmentService | null;
   appointmentDate: string;
   time?: string;
   reason: string;
@@ -40,6 +49,7 @@ export interface IAppointment {
 export interface CreateAppointmentPayload {
   petId: string;
   doctorId: string;
+  serviceId?: string;
   appointmentDate: string;
   time: string;
   reason: string;
