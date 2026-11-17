@@ -138,7 +138,7 @@ export const AdminDoctors: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search doctors..."
-                className="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs sm:text-sm focus:outline-none focus:border-teal-500 shadow-sm"
+                className="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-teal-500 shadow-sm"
               />
             </div>
 

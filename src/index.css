@@ -23,6 +23,40 @@
     color: #0f172a;
   }
 
+  html.dark {
+    color-scheme: dark;
+  }
+
+  html.light {
+    color-scheme: light;
+  }
+
+  select {
+    color-scheme: light;
+  }
+
+  html.dark select {
+    color-scheme: dark;
+  }
+
+  select option {
+    background-color: #ffffff;
+    color: #0f172a;
+  }
+
+  html.dark select option {
+    background-color: #072124;
+    color: #f8fafc;
+  }
+
+  input[type="date"] {
+    color-scheme: light;
+  }
+
+  html.dark input[type="date"] {
+    color-scheme: dark;
+  }
+
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;

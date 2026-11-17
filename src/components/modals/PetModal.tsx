@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import type { IPet } from "../../types/pet.types";
 import { X, Upload, Sparkles, Dog, Loader2 } from "lucide-react";
 
@@ -47,6 +48,16 @@ export const PetModal: React.FC<PetModalProps> = ({
     }
   }, [initialData, isOpen]);
 
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,9 +98,10 @@ export const PetModal: React.FC<PetModalProps> = ({
 
   const speciesOptions = ["Dog", "Cat", "Bird", "Rabbit", "Hamster", "Other"];
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="w-full max-w-lg rounded-3xl bg-white dark:bg-[#072124] border border-teal-100 dark:border-teal-700/50 p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/65 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
+      <div className="fixed inset-0 -z-10" onClick={onClose} aria-hidden="true" />
+      <div className="w-full max-w-lg rounded-3xl bg-white dark:bg-[#072124] border border-teal-100 dark:border-teal-700/50 p-6 sm:p-8 shadow-2xl relative my-auto z-10 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-150">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors cursor-pointer"
@@ -174,10 +186,10 @@ export const PetModal: React.FC<PetModalProps> = ({
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-teal-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-[#072124] border border-slate-200 dark:border-teal-700/60 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-teal-500 cursor-pointer"
               >
                 {speciesOptions.map((opt) => (
-                  <option key={opt} value={opt} className="dark:bg-[#072124]">
+                  <option key={opt} value={opt} className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">
                     {opt}
                   </option>
                 ))}
@@ -287,7 +299,8 @@ export const PetModal: React.FC<PetModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

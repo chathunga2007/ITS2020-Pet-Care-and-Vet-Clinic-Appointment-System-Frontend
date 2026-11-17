@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import type { IDoctor } from "../../types/doctor.types";
 import {
   getDoctorSchedules,
@@ -88,6 +89,16 @@ export const DoctorScheduleModal: React.FC<DoctorScheduleModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [savingDay, setSavingDay] = useState<string | null>(null);
   const [savingAll, setSavingAll] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen || !doctor) return;
@@ -234,9 +245,10 @@ export const DoctorScheduleModal: React.FC<DoctorScheduleModalProps> = ({
     });
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-3xl my-6 rounded-3xl bg-white dark:bg-[#072124] border border-teal-100 dark:border-teal-700/60 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200">
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-950/65 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
+      <div className="fixed inset-0 -z-10" onClick={onClose} aria-hidden="true" />
+      <div className="w-full max-w-3xl my-6 rounded-3xl bg-white dark:bg-[#072124] border border-teal-100 dark:border-teal-700/60 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] relative z-10 animate-in zoom-in-95 duration-150">
         {/* Modal Header */}
         <div className="px-5 sm:px-6 py-4 border-b border-teal-100 dark:border-white/10 flex items-center justify-between bg-teal-50/50 dark:bg-white/5 shrink-0">
           <div className="flex items-center gap-3">
@@ -347,10 +359,10 @@ export const DoctorScheduleModal: React.FC<DoctorScheduleModalProps> = ({
                             onChange={(e) =>
                               handleDayChange(day, "startTime", e.target.value)
                             }
-                            className="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white text-xs font-semibold focus:outline-none focus:border-teal-500 cursor-pointer"
+                            className="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-[#072124] border border-slate-200 dark:border-teal-700/60 text-slate-800 dark:text-white text-xs font-semibold focus:outline-none focus:border-teal-500 cursor-pointer"
                           >
                             {TIME_OPTIONS.map((t) => (
-                              <option key={t} value={t} className="text-slate-800">
+                              <option key={t} value={t} className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">
                                 {t}
                               </option>
                             ))}
@@ -364,10 +376,10 @@ export const DoctorScheduleModal: React.FC<DoctorScheduleModalProps> = ({
                             onChange={(e) =>
                               handleDayChange(day, "endTime", e.target.value)
                             }
-                            className="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white text-xs font-semibold focus:outline-none focus:border-teal-500 cursor-pointer"
+                            className="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-[#072124] border border-slate-200 dark:border-teal-700/60 text-slate-800 dark:text-white text-xs font-semibold focus:outline-none focus:border-teal-500 cursor-pointer"
                           >
                             {TIME_OPTIONS.map((t) => (
-                              <option key={t} value={t} className="text-slate-800">
+                              <option key={t} value={t} className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">
                                 {t}
                               </option>
                             ))}
@@ -385,12 +397,12 @@ export const DoctorScheduleModal: React.FC<DoctorScheduleModalProps> = ({
                                 Number(e.target.value)
                               )
                             }
-                            className="px-2 py-1.5 rounded-xl bg-slate-50 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white text-xs font-semibold focus:outline-none focus:border-teal-500 cursor-pointer"
+                            className="px-2 py-1.5 rounded-xl bg-slate-50 dark:bg-[#072124] border border-slate-200 dark:border-teal-700/60 text-slate-800 dark:text-white text-xs font-semibold focus:outline-none focus:border-teal-500 cursor-pointer"
                           >
-                            <option value={15}>15 Min</option>
-                            <option value={30}>30 Min</option>
-                            <option value={45}>45 Min</option>
-                            <option value={60}>60 Min</option>
+                            <option value={15} className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">15 Min</option>
+                            <option value={30} className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">30 Min</option>
+                            <option value={45} className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">45 Min</option>
+                            <option value={60} className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">60 Min</option>
                           </select>
                         </div>
                       </div>
@@ -448,7 +460,8 @@ export const DoctorScheduleModal: React.FC<DoctorScheduleModalProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

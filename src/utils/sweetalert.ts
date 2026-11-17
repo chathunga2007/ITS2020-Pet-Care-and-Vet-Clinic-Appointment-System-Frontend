@@ -31,7 +31,7 @@ export const Swal = {
       const container = document.createElement("div");
       container.id = "petvitals-swal-container";
       container.className =
-        "fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-900/40 dark:bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 select-none";
+        "fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-950/65 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200 select-none";
 
       let iconMarkup = "";
       if (icon === "success") {
@@ -120,7 +120,7 @@ export const Swal = {
       const container = document.createElement("div");
       container.id = "petvitals-swal-container";
       container.className =
-        "fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-900/40 dark:bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 select-none";
+        "fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-950/65 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200 select-none";
 
       let iconMarkup = `
         <div class="w-16 h-16 rounded-full border-4 border-amber-500/40 bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center mx-auto mb-4 text-amber-600 dark:text-amber-400 shadow-sm">

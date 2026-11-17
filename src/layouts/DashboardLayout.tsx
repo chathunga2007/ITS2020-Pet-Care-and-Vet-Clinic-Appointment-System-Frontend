@@ -122,7 +122,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       {mobileSidebarOpen && (
         <div
           onClick={() => setMobileSidebarOpen(false)}
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden animate-in fade-in duration-200"
+          className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-md lg:hidden animate-in fade-in duration-200"
         />
       )}
 
@@ -246,22 +246,22 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       </aside>
 
       <div className="flex-1 lg:pl-72 flex flex-col min-h-screen min-w-0 w-full max-w-full overflow-x-hidden">
-        <header className="sticky top-0 z-30 h-16 bg-white/80 dark:bg-[#072124]/90 backdrop-blur-xl border-b border-teal-100/80 dark:border-teal-700/40 px-4 sm:px-8 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <header className="sticky top-0 z-30 min-h-[4.5rem] bg-white/95 dark:bg-[#072124] backdrop-blur-md border-b border-teal-100 dark:border-teal-800/60 px-4 sm:px-8 py-3 flex items-center justify-between shadow-2xs">
+          <div className="flex items-center gap-3 min-w-0">
             <button
               onClick={() => setMobileSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-xl bg-teal-50 dark:bg-white/5 text-teal-800 dark:text-slate-200 border border-teal-100 dark:border-white/10"
+              className="lg:hidden p-2 rounded-xl bg-teal-50 dark:bg-white/5 text-teal-800 dark:text-slate-200 border border-teal-100 dark:border-white/10 shrink-0"
               aria-label="Open Navigation"
             >
               <Menu className="w-5 h-5" />
             </button>
 
-            <div>
-              <h2 className="text-sm sm:text-base font-black text-slate-800 dark:text-white tracking-tight">
+            <div className="flex flex-col justify-center min-w-0">
+              <h2 className="text-sm sm:text-base font-black text-slate-800 dark:text-white tracking-tight leading-snug">
                 {pageTitle || (isAdmin ? "Clinic Administrative Operations" : "Pet Care Member Portal")}
               </h2>
               {pageSubtitle && (
-                <p className="hidden sm:block text-[11px] text-slate-500 dark:text-slate-400">
+                <p className="hidden sm:block text-[11px] text-slate-500 dark:text-teal-300/80 leading-normal mt-0.5 truncate max-w-xl">
                   {pageSubtitle}
                 </p>
               )}
@@ -329,7 +329,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           </div>
         </header>
 
-        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl w-full min-w-0 mx-auto animate-in fade-in duration-200 overflow-x-hidden">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl w-full min-w-0 mx-auto overflow-x-hidden">
           {children}
         </main>
       </div>

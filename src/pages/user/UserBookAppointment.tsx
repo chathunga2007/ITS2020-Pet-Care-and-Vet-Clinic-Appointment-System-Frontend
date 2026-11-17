@@ -419,7 +419,7 @@ export const UserBookAppointment: React.FC = () => {
                       min={todayStr}
                       value={appointmentDate}
                       onChange={(e) => setAppointmentDate(e.target.value)}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 font-semibold"
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 dark:bg-[#072124] border border-slate-200 dark:border-teal-700/60 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 font-semibold cursor-pointer"
                     />
                   </div>
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import {
   getAllServices,
@@ -51,6 +52,16 @@ export const AdminServices: React.FC = () => {
   useEffect(() => {
     fetchServices();
   }, []);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isModalOpen]);
 
   const handleOpenAdd = () => {
     setEditingService(null);
@@ -153,7 +164,7 @@ export const AdminServices: React.FC = () => {
               placeholder="Search services by name or procedure..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-teal-700/40 text-xs sm:text-sm text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-teal-500 font-medium"
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#072124] border border-slate-200 dark:border-teal-700/60 text-xs sm:text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-teal-500 font-medium"
             />
           </div>
 
@@ -266,110 +277,117 @@ export const AdminServices: React.FC = () => {
         )}
 
         {/* MODAL (CREATE / EDIT SERVICE) */}
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-            <div className="bg-white dark:bg-[#072124] w-full max-w-lg rounded-3xl border border-teal-100 dark:border-teal-700/70 shadow-2xl overflow-hidden">
-              {/* MODAL HEADER */}
-              <div className="px-5 py-4 bg-gradient-to-r from-teal-800 to-emerald-700 text-white flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-emerald-300" />
-                  <h3 className="text-sm font-bold tracking-tight">
-                    {editingService ? "Update Clinical Service" : "Add New Clinical Service"}
-                  </h3>
-                </div>
-                <button
-                  onClick={handleCloseModal}
-                  className="p-1.5 rounded-xl hover:bg-white/10 text-white/80 hover:text-white transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* MODAL FORM BODY */}
-              <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-teal-200 mb-1.5">
-                    Service / Treatment Name <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Comprehensive Physical Wellness Exam"
-                    value={formName}
-                    onChange={(e) => setFormName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-teal-700/50 text-xs sm:text-sm text-slate-800 dark:text-white focus:outline-none focus:border-teal-500 font-medium"
-                  />
+        {isModalOpen &&
+          createPortal(
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/65 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
+              <div
+                className="fixed inset-0 -z-10"
+                onClick={handleCloseModal}
+                aria-hidden="true"
+              />
+              <div className="bg-white dark:bg-[#072124] w-full max-w-lg rounded-3xl border border-teal-100 dark:border-teal-700/70 shadow-2xl overflow-hidden my-auto relative z-10 animate-in zoom-in-95 duration-150">
+                {/* MODAL HEADER */}
+                <div className="px-5 py-4 bg-gradient-to-r from-teal-800 to-emerald-700 text-white flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-emerald-300" />
+                    <h3 className="text-sm font-bold tracking-tight">
+                      {editingService ? "Update Clinical Service" : "Add New Clinical Service"}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={handleCloseModal}
+                    className="p-1.5 rounded-xl hover:bg-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* MODAL FORM BODY */}
+                <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-teal-200 mb-1.5">
-                      Fee (LKR) <span className="text-rose-500">*</span>
+                      Service / Treatment Name <span className="text-rose-500">*</span>
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       required
-                      min="0"
-                      step="50"
-                      placeholder="e.g. 2500"
-                      value={formPrice}
-                      onChange={(e) => setFormPrice(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-teal-700/50 text-xs sm:text-sm text-slate-800 dark:text-white focus:outline-none focus:border-teal-500 font-medium"
+                      placeholder="e.g. Comprehensive Physical Wellness Exam"
+                      value={formName}
+                      onChange={(e) => setFormName(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#082a2e] border border-slate-200 dark:border-teal-700/60 text-xs sm:text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-teal-500 font-medium"
                     />
                   </div>
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-teal-200 mb-1.5">
+                        Fee (LKR) <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="number"
+                        required
+                        min="0"
+                        step="50"
+                        placeholder="e.g. 2500"
+                        value={formPrice}
+                        onChange={(e) => setFormPrice(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#082a2e] border border-slate-200 dark:border-teal-700/60 text-xs sm:text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-teal-500 font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-teal-200 mb-1.5">
+                        Duration (Minutes)
+                      </label>
+                      <select
+                        value={formDuration}
+                        onChange={(e) => setFormDuration(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#082a2e] border border-slate-200 dark:border-teal-700/60 text-xs sm:text-sm text-slate-800 dark:text-white focus:outline-none focus:border-teal-500 font-medium cursor-pointer"
+                      >
+                        <option value="15" className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">15 Minutes (Quick Visit)</option>
+                        <option value="30" className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">30 Minutes (Standard)</option>
+                        <option value="45" className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">45 Minutes (Extended)</option>
+                        <option value="60" className="bg-white text-slate-900 dark:bg-[#072124] dark:text-white">60 Minutes (Comprehensive/Surgery)</option>
+                      </select>
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-teal-200 mb-1.5">
-                      Duration (Minutes)
+                      Description &amp; Instructions
                     </label>
-                    <select
-                      value={formDuration}
-                      onChange={(e) => setFormDuration(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-teal-700/50 text-xs sm:text-sm text-slate-800 dark:text-white focus:outline-none focus:border-teal-500 font-medium cursor-pointer"
-                    >
-                      <option value="15" className="text-slate-800 dark:bg-[#072124]">15 Minutes (Quick Visit)</option>
-                      <option value="30" className="text-slate-800 dark:bg-[#072124]">30 Minutes (Standard)</option>
-                      <option value="45" className="text-slate-800 dark:bg-[#072124]">45 Minutes (Extended)</option>
-                      <option value="60" className="text-slate-800 dark:bg-[#072124]">60 Minutes (Comprehensive/Surgery)</option>
-                    </select>
+                    <textarea
+                      rows={3}
+                      placeholder="Brief description of the procedure, preparation required, or what's included..."
+                      value={formDescription}
+                      onChange={(e) => setFormDescription(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#082a2e] border border-slate-200 dark:border-teal-700/60 text-xs sm:text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-teal-500 font-medium resize-none"
+                    />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-teal-200 mb-1.5">
-                    Description &amp; Instructions
-                  </label>
-                  <textarea
-                    rows={3}
-                    placeholder="Brief description of the procedure, preparation required, or what's included..."
-                    value={formDescription}
-                    onChange={(e) => setFormDescription(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-teal-700/50 text-xs sm:text-sm text-slate-800 dark:text-white focus:outline-none focus:border-teal-500 font-medium resize-none"
-                  />
-                </div>
-
-                {/* MODAL ACTIONS */}
-                <div className="pt-3 border-t border-slate-100 dark:border-teal-800/40 flex items-center justify-end gap-2.5">
-                  <button
-                    type="button"
-                    onClick={handleCloseModal}
-                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white text-xs font-bold shadow-md shadow-teal-700/20 disabled:opacity-50 transition-all flex items-center gap-1.5 active:scale-95"
-                  >
-                    {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                    <span>{editingService ? "Save Changes" : "Create Service"}</span>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
+                  {/* MODAL ACTIONS */}
+                  <div className="pt-3 border-t border-slate-100 dark:border-teal-800/40 flex items-center justify-end gap-2.5">
+                    <button
+                      type="button"
+                      onClick={handleCloseModal}
+                      className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="px-5 py-2 rounded-xl bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white text-xs font-bold shadow-md shadow-teal-700/20 disabled:opacity-50 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                    >
+                      {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                      <span>{editingService ? "Save Changes" : "Create Service"}</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>,
+            document.body
+          )}
       </div>
     </DashboardLayout>
   );
