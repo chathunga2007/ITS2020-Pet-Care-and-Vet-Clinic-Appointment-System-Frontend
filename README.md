@@ -432,7 +432,7 @@ The application is deployed on **Vercel** with single-page application rewriting
 ## 🎓 Academic Metadata
 
 - **Institution**: [Institute of Software Engineering (IJSE)](https://www.ijse.lk/)
-- **Program**: Graduate Diploma in Software Engineering (GDSE) / Higher National Diploma
+- **Program**: Higher Diploma in Software Engineering (HDSE)
 - **Semester**: Semester 03
 - **Module**: Rapid Application Development (RAD &bull; Module ITS2020)
 - **Project**: Pet Care and Veterinary Clinic Online Consultation & Appointment Scheduling System
